@@ -1,0 +1,79 @@
+.header{
+    background-color: #FEEDFF ;
+}
+/* Reset some basic styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #FEEDFF;
+}
+
+/* Style the navigation bar */
+.navbar {
+    background-color: #9C27B0 ; 
+    overflow: hidden; /* Clear floats */
+    text-align: left; /* Center-align the items */
+    padding: 14px 0; /* Vertical padding */
+}
+
+/* Style the links inside the navbar */
+.navbar a {
+    color: black; 
+    padding: 14px 20px; /* Padding around the links */
+    text-decoration: none; /* Remove underline */
+    font-family: Arial, sans-serif; /* Font style */
+    font-size: 24px; /* Font size */
+    display: inline-block; /* Inline-block to respect padding */
+    transition: font-weight 0.3s; /* Smooth transition for the font weight change */
+}
+
+/* Change font weight on hover */
+.navbar a:hover {
+    font-weight: bold; /* Bold text on hover */
+}
+
+/* Add responsiveness for smaller screens */
+@media (max-width: 600px) {
+    .navbar a {
+        display: block; /* Stack links vertically */
+        padding: 10px 0; /* Adjust padding */
+    }
+}
+.home{
+    font-weight: bold
+}
+.box {
+    width: 600px;  /* Set the width of the box */
+    height: 350px; /* Set the height of the box */
+    background-color: white; /* Set the background color to red */
+    position: absolute;
+    right: 100px;
+    top: 300px
+}
+.input-box input{
+    width: 535px;
+    height: 10px;
+    background:  white;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    font-size: 16px;
+    color:black;
+    padding: 20px 45px 20px 20px;
+    position: absolute;
+    right: 100px;
+    top: 700px;
+}
+.input-box input::placeholder{
+    color:black
+}
+.input-box i {
+    position: absolute;
+    right: 120px;
+    top: 725.5px;
+    transform: translateY(-50%);
+    font-size: 40px;
+}
+/* time */
