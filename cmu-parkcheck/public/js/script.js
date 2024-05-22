@@ -25,7 +25,7 @@ function showTime(){
         m = "0" + m;
     }
     if (s < 10){
-        s = "s" + s;
+        s = "0" + s;
     }
 
     let time = h + ':' + m + ':' + s + " " + session;
