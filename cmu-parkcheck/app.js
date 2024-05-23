@@ -62,6 +62,6 @@ app.post('/api/feedback', (req, res) => {
 const PORT = 3000;
 app.listen(3000, function () {
     console.log(`Server started on port ${PORT}`);
-    console.log("http://localhost:${PORT}/ (home page)");
+    console.log("http://localhost:3000/ (home page)");
 
 });
