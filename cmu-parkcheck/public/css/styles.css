@@ -1,29 +1,37 @@
 .header{
-    background-color: #FEEDFF ;
+    background-color: #fbf2fc ;
 }
+
 /* Reset some basic styles */
 body, html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #FEEDFF;
+    background-color: #ffffff;
+}
+@media (max-width: 800px) {
+    .header .logo img {
+        width: 250px; /* Smaller logo on small screens */
+        height: 100px;
+    }
 }
 
 /* Style the navigation bar */
 .navbar {
-    background-color: #9C27B0 ; 
+    background-color: #872698 ; 
     overflow: hidden; /* Clear floats */
     text-align: left; /* Center-align the items */
-    padding: 14px 0; /* Vertical padding */
+    padding: 0.5px 0; /* Vertical padding */
+    
 }
 
 /* Style the links inside the navbar */
 .navbar a {
-    color: black; 
+    color: #ffffff; 
     padding: 14px 20px; /* Padding around the links */
     text-decoration: none; /* Remove underline */
     font-family: Arial, sans-serif; /* Font style */
-    font-size: 24px; /* Font size */
+    font-size: 20px; /* Font size */
     display: inline-block; /* Inline-block to respect padding */
     transition: font-weight 0.3s; /* Smooth transition for the font weight change */
 }
@@ -34,10 +42,11 @@ body, html {
 }
 
 /* Add responsiveness for smaller screens */
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     .navbar a {
         display: block; /* Stack links vertically */
         padding: 10px 0; /* Adjust padding */
+        font-size: 20px;
     }
 }
 .home{
@@ -93,4 +102,24 @@ body, html {
     box-shadow: -4px -5px 50px 10px white;
     transform: translate(-50%);
     
+}
+
+@media (max-width: 800px) {
+    .box {
+        width: 70%; /* Make the box smaller on small screens */
+        height: 30%;
+        
+    }
+    .input-box input{
+        width: 58%; /* Make the box smaller on small screens */
+        height: 10px;   
+        top: 600px;
+    }
+    .input-box i {
+        size: 20px;
+        top: 630px;
+    }
+    .myclock{
+        size: small;
+    }
 }

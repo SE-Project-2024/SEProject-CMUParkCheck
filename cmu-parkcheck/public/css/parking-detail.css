@@ -1,0 +1,23 @@
+.info-feedback {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+}
+
+.word {
+    font-size: 40px;
+    text-align: center;
+    margin-top: 20px;
+    font: bold;
+}
+
+.like {
+    margin-top: 20px; /* Adjust spacing between text and icons */
+}
+
+.like i {
+    font-size: 50px;
+    margin: 0 10px; /* Adjust spacing between icons */
+    color: #000; /* Adjust icon color */
+}

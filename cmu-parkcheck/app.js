@@ -32,6 +32,11 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     res.render('pages/index');
 });
+app.get('/parking-details', (req, res) => {
+    res.render('pages/parking-details');
+    console.log("http://localhost:3000/parking-details");
+});
+
 
 app.get('/api/parking-areas', (req, res) => {
     const query = "Select * FROM parking_areas";
@@ -63,5 +68,5 @@ const PORT = 3000;
 app.listen(3000, function () {
     console.log(`Server started on port ${PORT}`);
     console.log("http://localhost:3000/ (home page)");
-
+    console.log("http://localhost:3000/parking-details");
 });
