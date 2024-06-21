@@ -31,9 +31,8 @@ body, html {
     padding: 14px 20px; /* Padding around the links */
     text-decoration: none; /* Remove underline */
     font-family: Arial, sans-serif; /* Font style */
-    font-size: 20px; /* Font size */
+    font-size: 2vw; /* Font size */
     display: inline-block; /* Inline-block to respect padding */
-    transition: font-weight 0.3s; /* Smooth transition for the font weight change */
 }
 
 /* Change font weight on hover */
@@ -46,7 +45,7 @@ body, html {
     .navbar a {
         display: block; /* Stack links vertically */
         padding: 10px 0; /* Adjust padding */
-        font-size: 20px;
+        font-size: 2vw;
     }
 }
 .home{
@@ -68,7 +67,7 @@ body, html {
     outline: none;
     border: 2px solid rgba(255, 255, 255, .2);
     border-radius: 40px;
-    font-size: 16px;
+    font-size: 1vw;
     color:black;
     padding: 20px 45px 20px 20px;
     position: absolute;
@@ -83,7 +82,7 @@ body, html {
     right: 120px;
     top: 725.5px;
     transform: translateY(-50%);
-    font-size: 40px;
+    font-size: 2vw;
 }
 /* time */
 .myclock{

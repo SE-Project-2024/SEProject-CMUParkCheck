@@ -6,18 +6,18 @@
 }
 
 .word {
-    font-size: 40px;
+    font-size: 4vw;
     text-align: center;
     margin-top: 20px;
-    font: bold;
+    font-weight: bold;
 }
 
 .like {
-    margin-top: 20px; /* Adjust spacing between text and icons */
+    margin-top: 5%; /* Adjust spacing between text and icons */
 }
 
 .like i {
-    font-size: 50px;
-    margin: 0 10px; /* Adjust spacing between icons */
+    font-size: 5vw;
+    margin: 0 2vw; /* Adjust spacing between icons */
     color: #000; /* Adjust icon color */
 }
