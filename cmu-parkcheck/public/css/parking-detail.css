@@ -4,11 +4,27 @@
     justify-content: center; /* Center vertically */
     align-items: center; /* Center horizontally */
 }
-
+.myclock{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    align-self: center;
+    padding: 20px 40px 20px 40px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: larger;
+    font-weight: bolder;
+    text-decoration-color: white;
+    color: white;
+    background-color: #9C27B0;
+    box-shadow: -4px -5px 50px 10px white;
+    transform: translate(-50%);
+    
+}
 .word {
     font-size: 4vw;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 150px;
     font-weight: bold;
 }
 
@@ -20,4 +36,11 @@
     font-size: 5vw;
     margin: 0 2vw; /* Adjust spacing between icons */
     color: #000; /* Adjust icon color */
+}
+.like i.like-icon:hover {
+    color: green;
+}
+
+.like i.dislike-icon:hover {
+    color: red;
 }

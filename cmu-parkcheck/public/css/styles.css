@@ -53,16 +53,16 @@ body, html {
 }
 .box {
     width: 600px;  /* Set the width of the box */
-    height: 350px; /* Set the height of the box */
-    background-color: white; /* Set the background color to red */
+    height: 320px; /* Set the height of the box */
+    background-color: #fbf2fc; 
     position: absolute;
-    right: 100px;
-    top: 300px
+    right: 50px;
+    top: 220px
 }
 .input-box input{
     width: 535px;
     height: 10px;
-    background:  white;
+    background:  #fbf2fc;
     border: none;
     outline: none;
     border: 2px solid rgba(255, 255, 255, .2);
@@ -71,24 +71,24 @@ body, html {
     color:black;
     padding: 20px 45px 20px 20px;
     position: absolute;
-    right: 100px;
-    top: 700px;
+    right: 50px;
+    top: 570px;
 }
 .input-box input::placeholder{
     color:black
 }
 .input-box i {
     position: absolute;
-    right: 120px;
-    top: 725.5px;
+    right: 60px;
+    top: 595px;
     transform: translateY(-50%);
     font-size: 2vw;
 }
 /* time */
 .myclock{
     position: absolute;
-    top: 40%;
-    left: 45%;
+    top: 10%;
+    left: 50%;
     align-self: center;
     padding: 20px 40px 20px 40px;
     border-radius: 10px;
