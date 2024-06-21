@@ -45,7 +45,7 @@ body, html {
     .navbar a {
         display: block; /* Stack links vertically */
         padding: 10px 0; /* Adjust padding */
-        font-size: 2vw;
+        font-size: 4vw;
     }
 }
 .home{
