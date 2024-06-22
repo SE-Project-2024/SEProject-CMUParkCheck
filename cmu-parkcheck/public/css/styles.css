@@ -100,7 +100,7 @@ body, html {
     background-color: #9C27B0;
     box-shadow: -4px -5px 50px 10px white;
     transform: translate(-50%);
-    
+    z-index: 1000;
 }
 
 @media (max-width: 800px) {
@@ -121,4 +121,10 @@ body, html {
     .myclock{
         size: small;
     }
+}
+#map{
+    flex: 1;
+    height: calc(100vh - 100px);
+    width: 55vw;
+    position: relative;
 }
