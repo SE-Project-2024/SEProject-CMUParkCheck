@@ -38,12 +38,12 @@ app.get('/parking-details', (req, res) => {
 });
 
 
-app.get('/api/parking-areas', (req, res) => {
-    const query = "Select * FROM parking_areas";
-    connect.query(query, (err, results) => {
-        if (err) {
-            console.error("Error executing query: ", err);
-            res.status(500).json({error: "Internal Server Error"});
+app.get('/api/parking_areas', (req, res) => {
+    const query = "SELECT * FROM parking_areas";
+    connection.query(query, (err, results) => {
+        if (err){
+            console.error("Error fetching parking areas:", err);
+            res.status(500).json({ error: "Internal Server Error"});
             return;
         }
         res.json(results);
