@@ -71,7 +71,7 @@ function searchBuilding(){
             map.setCenter(buildingMarker.getPosition());
             map.setZoom(18);
 
-            const radius = 5000;
+            const radius = 150;
             parkingMarkers.forEach(marker => {
                 const distance = google.maps.geometry.spherical.computeDistanceBetween(
                     buildingMarker.getPosition(), marker.getPosition());
