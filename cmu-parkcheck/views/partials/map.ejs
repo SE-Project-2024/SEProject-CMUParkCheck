@@ -1,5 +1,16 @@
+<style>
+    .info-window-link{
+        color:blue;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+</style>
 <div id="map"></div>
 <script>
+    const openParkingDetails = () => {
+                    console.log('Opening parking details');
+                    window.location.href = '/parking-details';
+                };
     let map;
     let parkingMarkers = [];
     let buildingMarker = null;
@@ -29,12 +40,13 @@
                 elementType: 'labels',
                 stylers:[{ visibility: 'off'}]
             },
-        ]
+        ];
         map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: 18.800088, lng: 98.95072},
             zoom: 17,
             styles: customMap
         });
+        infoWindow = new google.maps.InfoWindow();
 
         vehicleTypeMarkers ={
             'car': '/img/marker_car.png',
@@ -56,8 +68,21 @@
                         scaledSize: new google.maps.Size(60 , 60)
                     }
                 });
+                const infoWindowContent = `
+                <div class="info-window">
+                    <h3>${parking_area.name}</h3>
+                    <p>${parking_area.latitude} , ${parking_area.longitude}</p>
+                    <div class="info-window-link" onclick="openParkingDetails()">See more</div>
+                    </div>
+                `;
+    
+                const infoWindow = new google.maps.InfoWindow({
+                    content: infoWindowContent
+                });
                 marker.addListener('click', () => {
                     console.log(`Clicked on marker: ${parking_area.name}`);
+                    infoWindow.setContent(infoWindowContent);
+                    infoWindow.open(map, marker);
                 });
                 parkingMarkers.push(marker);
             });
