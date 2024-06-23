@@ -6,20 +6,31 @@
             center: { lat: 18.800088, lng: 98.95072},
             zoom: 17,
         });
+
+        const vehicleTypeMarkers ={
+            'car': '/img/marker_car.png',
+            'motorbike': '/img/marker_motorbike.png',
+        }
     
         fetch('http://localhost:3000/api/parking_areas')
         .then(response => response.json())
         .then(data => {
             console.log('Fetched data: ', data);
             data.forEach(parking_area => {
+                const iconURL = vehicleTypeMarkers[parking_area.vehicle_type];
                 const marker = new google.maps.Marker({
                     position: { lat: parseFloat(parking_area.latitude), lng: parseFloat(parking_area.longitude) },
                     map: map,
                     title: parking_area.name,
+                    icon: {
+                        url: iconURL,
+                        scaledSize: new google.maps.Size(60 , 60)
+                    }
                 });
                 marker.addListener('click', () => {
                     console.log(`Clicked on marker: ${parking_area.name}`);
                 });
+                
             });
         })
         .catch(error => console.error('Error fetching parking areas: ', error));
