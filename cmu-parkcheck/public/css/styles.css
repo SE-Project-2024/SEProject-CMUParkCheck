@@ -9,7 +9,7 @@ body, html {
     box-sizing: border-box;
     background-color: #ffffff;
 }
-@media (max-width: 800px) {
+@media (max-width: 811px) {
     .header .logo img {
         width: 250px; /* Smaller logo on small screens */
         height: 100px;
@@ -41,7 +41,7 @@ body, html {
 }
 
 /* Add responsiveness for smaller screens */
-@media (max-width: 800px) {
+@media (max-width: 811px) {
     .navbar a {
         display: block; /* Stack links vertically */
         padding: 10px 0; /* Adjust padding */
@@ -98,35 +98,65 @@ body, html {
     font-weight: bolder;
     text-decoration-color: white;
     color: white;
-    background-color: #9C27B0;
-    box-shadow: -4px -5px 50px 10px white;
+    background-color: #872698;
+    /* box-shadow: -4px -5px 50px 10px white; */
     transform: translate(-50%);
     z-index: 1000;
 }
 
-@media (max-width: 800px) {
-    .box {
-        width: 70%; /* Make the box smaller on small screens */
-        height: 30%;
-        top: 220px;
-        
-    }
-    .input-box input{
-        width: 62%; /* Make the box smaller on small screens */
-        height: 10px;   
-        top: 575px;
-    }
-    .input-box i {
-        size: 20px;
-        top: 600px;
-    }
-    .myclock{
-        size: small;
-    }
-}
 #map{
     flex: 1;
     height: calc(100vh - 100px);
     width: 55vw;
     position: relative;
+}
+@media (max-width: 811px) {
+    .box {
+        height: 15%; 
+        width: 60%;
+        position: absolute;
+        top: 58%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Center the box */
+        background-color: #fbf2fc; /* Background color */
+        display: flex; /* Use flexbox for positioning elements inside */
+        align-items: center; /* Center items vertically */
+        justify-content: center; /* Center items horizontally */
+      
+    }
+    .input-box input{
+        width: 50%; /* Make the box smaller on small screens */
+        height: 10px;   
+        top: 67%;
+        left: 20%;
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+
+    
+    }
+    .input-box i {
+        size: 50px;
+        top: 70%; /* Center vertically */
+        left: 75%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Center the box */
+        display: flex; /* Use flexbox for positioning elements inside */
+        align-items: center; /* Center items vertically */
+        justify-content: center; /* Center items horizontally */
+    }
+    .myclock{
+        font-size: 2px; /* Adjust font size for smaller screens */
+        
+    }
+    #map{
+        flex: 1; /* Take up remaining space within its container */
+        height: 25vh; /* 40% of viewport height */
+        width: 44vh; /* 40% of viewport height */
+        position: relative;
+        margin: auto; /* Center horizontally */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+    }
 }

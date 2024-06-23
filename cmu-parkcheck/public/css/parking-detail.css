@@ -4,20 +4,19 @@
     justify-content: center; /* Center vertically */
     align-items: center; /* Center horizontally */
 }
-.myclock{
+.detail-clock{
     position: absolute;
-    top: 30%;
+    top: 25%;
     left: 50%;
     align-self: center;
-    padding: 20px 40px 20px 40px;
+    /* padding: 20px 40px 20px 40px; */
     border-radius: 10px;
     text-align: center;
     font-size: larger;
     font-weight: bolder;
     text-decoration-color: white;
     color: white;
-    background-color: #9C27B0;
-    box-shadow: -4px -5px 50px 10px white;
+    /* box-shadow: -4px -5px 50px 10px white; */
     transform: translate(-50%);
     z-index: 1000;
 }
