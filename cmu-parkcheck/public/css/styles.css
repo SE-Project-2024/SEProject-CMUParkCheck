@@ -76,7 +76,7 @@ body, html {
     top: 570px;
 }
 .input-box input::placeholder{
-    color:black
+    color:rgb(94, 91, 91)
 }
 .input-box i {
     position: absolute;
@@ -159,4 +159,27 @@ body, html {
         justify-content: center;
         margin-top: 10px;
     }
+}
+.btn-container{
+    position: absolute;
+    top: 70px;
+    left:10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 1000;
+}
+#map-container{
+    position: relative;
+    width: 100%;
+}
+.btn{
+    border-radius: 10%;
+    width: auto;
+    background-color:rgb(227, 223, 223);
+    border-color: rgb(227, 223, 223);
+}
+.btn:hover{
+    background-color: #872698;
+    color: white;
 }

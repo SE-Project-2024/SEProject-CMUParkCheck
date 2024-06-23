@@ -1,5 +1,12 @@
 <%- include("../partials/header") %>
-<%- include("../partials/map") %>
+<div id="map-container">
+    <%- include("../partials/map") %>
+    <div class="btn-container">
+        <button class="btn">all</button>
+        <button class="btn">car</button>
+        <button class="btn">motorbike</button>
+    </div>
+</div>
 <div class="box">
     <%- include("../partials/time") %>
 </div>
