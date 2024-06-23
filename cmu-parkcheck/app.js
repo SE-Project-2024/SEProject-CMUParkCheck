@@ -49,7 +49,24 @@ app.get('/api/parking_areas', (req, res) => {
         res.json(results);
     });
 });
-
+app.get('/api/buildings/:input', (req, res) => {
+    const input = req.params.input;
+    const query = `
+        SELECT * FROM buildings
+        WHERE name LIKE ? OR building_code LIKE ?
+        `;
+    connection.query(query, [`%${input}%`, `%${input}%`], (error, results) => {
+        if (error){
+            console.error("Error fetching buildings:", error);
+            return res.status(500).json({ error: "Internal Server Error"});
+        }
+        if (results.length === 0){
+            return res.status(404).json({error: "Building not found"});
+        }
+        const building = results[0];
+        res.json(building);
+    });
+});
 app.post('/api/feedback', (req, res) => {
     const { parking_area_id, visit_time, positive_feedback } = req.body;
     const query = "INSERT INTO feedback (parking_area_id, visit_time, positive_feedback) VALUES (?, ?, ?)";
