@@ -19,7 +19,7 @@
     background-color: #9C27B0;
     box-shadow: -4px -5px 50px 10px white;
     transform: translate(-50%);
-    
+    z-index: 1000;
 }
 .word {
     font-size: 4vw;
