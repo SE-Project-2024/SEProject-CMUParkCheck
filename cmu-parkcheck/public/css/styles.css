@@ -63,6 +63,7 @@ body, html {
     background-color: #fbf2fc ; /* Set the background color to red */
     position: absolute;
     right: 100px;
+    top: 200px
     top: 200px;
 }
 .input-box input{
