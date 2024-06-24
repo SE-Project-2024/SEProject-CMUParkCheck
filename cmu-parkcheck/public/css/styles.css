@@ -30,8 +30,8 @@ body, html {
     color: #ffffff; 
     padding: 14px 20px; /* Padding around the links */
     text-decoration: none; /* Remove underline */
-    font-family: Arial, sans-serif; /* Font style */
-    font-size: 2vw; /* Font size */
+    font-family: Arial, Helvetica, sans-serif; /* Font style */
+    font-size: 1vw; /* Font size */
     display: inline-block; /* Inline-block to respect padding */
 }
 
