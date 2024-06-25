@@ -4,7 +4,10 @@
 <div class="info-feedback">
     <div class="detail-clock"><%- include("../partials/time") %></div>
       <div class="word">
-        <a>Behind Old CAMT Building</a>
+        <p><%= parkingArea.name %></p>
+        <div class="gmaps_link">
+        <p><a href="<%= parkingArea.google_maps_link %>"><img src="/img/maps_logo.png" alt="maps_photo"></a></p>
+        </div>
     </div>
     <div class="like">
         <i class='bx bx-like like-icon'></i>

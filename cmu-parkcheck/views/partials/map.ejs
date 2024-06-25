@@ -7,9 +7,9 @@
 </style>
 <div id="map"></div>
 <script>
-    const openParkingDetails = () => {
-                    console.log('Opening parking details');
-                    window.location.href = '/parking-details';
+    const openParkingDetails = (id) => {
+                    console.log('Opening parking details:', id);
+                    window.location.href = `/parking-details/${id}`;
                 };
     let map;
     let parkingMarkers = [];
@@ -72,7 +72,7 @@
                 <div class="info-window">
                     <h3>${parking_area.name}</h3>
                     <p>${parking_area.latitude} , ${parking_area.longitude}</p>
-                    <div class="info-window-link" onclick="openParkingDetails()">See more</div>
+                    <div class="info-window-link" onclick="openParkingDetails(${parking_area.id})">See more</div>
                     </div>
                 `;
     

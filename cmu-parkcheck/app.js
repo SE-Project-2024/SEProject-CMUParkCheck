@@ -32,12 +32,23 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     res.render('pages/index');
 });
-app.get('/parking-details', (req, res) => {
-    res.render('pages/parking-details');
-    console.log("http://localhost:3000/parking-details");
-});
-
-
+app.get('/parking-details/:id', (req, res) => {
+    const parking_area_id = req.params.id;
+    const query = "SELECT name, google_maps_link FROM parking_areas WHERE id = ?";
+    connection.query(query, [parking_area_id], (err, results) =>{
+        if (err){
+            console.error("Error fetching parking area details: ", err);
+            res.status(500).send("Internal Server Error");
+            return;
+        }
+        if (results.length === 0){
+            res.status(404).send("Parking area not found");
+                return;
+            }
+            const parkingArea = results[0];
+            res.render('pages/parking-details', { parkingArea});
+        });
+    });
 app.get('/api/parking_areas', (req, res) => {
     const query = "SELECT * FROM parking_areas";
     connection.query(query, (err, results) => {

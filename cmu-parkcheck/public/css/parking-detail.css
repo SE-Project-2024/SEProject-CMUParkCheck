@@ -26,9 +26,26 @@
     margin-top: 150px;
     font-weight: bold;
 }
+.gmaps_link{
+    position: absolute;
+    top: 42%;
+    right: 12%;
+    width: 5%;
+    height: 9%;
+    visibility: hidden;
+
+}
+.gmaps_link img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    visibility: visible;
+
+
+}
 
 .like {
-    margin-top: 5%; /* Adjust spacing between text and icons */
+    margin-top: 3%; /* Adjust spacing between text and icons */
 }
 
 .like i {
