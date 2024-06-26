@@ -72,7 +72,7 @@
     color: red;
 }
 
-.parking-situation-meter{
+/* .parking-situation-meter{
     position:relative;
     width: 75vw;
     height: 20px;
@@ -95,4 +95,28 @@
 .negative-feedback::after{
     background: linear-gradient(to right, red 0%, red 100%);
 }
+ */
+.parking-situation-meter {
+    position: relative;
+    width: 75vw;
+    height: 20px;
+    background-color: whitesmoke;
+    display: flex;
+    overflow: hidden;
+}
 
+.positive-feedback, .negative-feedback {
+    height: 100%;
+}
+
+.positive-feedback {
+    background-color: green;
+    width: 50%;
+    transition: width 0.3s ease-in-out;
+}
+
+.negative-feedback {
+    background-color: red;
+    width: 50%;
+    transition: width 0.3s ease-in-out;
+}
