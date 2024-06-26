@@ -28,7 +28,7 @@ function showTime(){
         s = "0" + s;
     }
 
-    let time = h + ':' + m + ':' + s + " " + session;
+    let time = h + ' : ' + m + ' : ' + s + " " + session;
 
     $('#myclock').html(time);
     setTimeout(showTime, 1000)
