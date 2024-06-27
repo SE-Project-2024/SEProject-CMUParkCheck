@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Jireh410.",
+    password: "Kard_1539",
     database: "cmu_parkcheck"
 });
 
@@ -32,9 +32,38 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     res.render('pages/index');
 });
+
+app.get('/api/feedback/:parkingAreaId', (req, res) => {
+    const parkingAreaId = req.params.parkingAreaId;
+    connection.query('SELECT positive_feedback, COUNT(*) AS count FROM feedback WHERE parking_area_id = ? GROUP BY positive_feedback', [parkingAreaId], (error, results) => {
+        console.log(results);
+
+        if (error) throw error;
+        const feedback = { likes: 0, dislikes: 0 };
+        results.forEach(row => {
+            if (row.positive_feedback) {
+                feedback.likes = row.count;
+            } else {
+                feedback.dislikes = row.count;
+            }
+        });
+        res.json(feedback);
+    });
+});
+
+app.post('/api/feedback', (req, res) => {
+    const { parkingAreaId, positiveFeedback } = req.body;
+    connection.query('INSERT INTO feedback (parking_area_id, visit_time, positive_feedback) VALUES (?, NOW(), ?)', [parkingAreaId, positiveFeedback], (error, results) => {
+        console.log(req.body);
+        if (error) throw error;
+        res.status(201).json({  });
+
+    });
+});
+
 app.get('/parking-details/:id', (req, res) => {
     const parking_area_id = req.params.id;
-    const query = "SELECT name, google_maps_link FROM parking_areas WHERE id = ?";
+    const query = "SELECT id, name, google_maps_link FROM parking_areas WHERE id = ?";
     connection.query(query, [parking_area_id], (err, results) =>{
         if (err){
             console.error("Error fetching parking area details: ", err);
@@ -46,7 +75,8 @@ app.get('/parking-details/:id', (req, res) => {
                 return;
             }
             const parkingArea = results[0];
-            res.render('pages/parking-details', { parkingArea});
+            console.log(parkingArea);
+            res.render('pages/parking-details', { parkingArea });
         });
     });
 app.get('/api/parking_areas', (req, res) => {
