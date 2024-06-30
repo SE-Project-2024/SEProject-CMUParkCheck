@@ -33,7 +33,7 @@ function showTime(){
     $('#myclock').html(time);
     setTimeout(showTime, 1000)
 }
-
+let buildingCircle = null;
 function searchBuilding(){
     const input = document.getElementById('destination-input').value.trim();
 
@@ -54,6 +54,9 @@ function searchBuilding(){
             if(buildingMarker){
                 buildingMarker.setMap(null);
             }
+            if (buildingCircle){
+                buildingCircle.setMap(null);
+            }
 
             buildingMarker = new google.maps.Marker({
                 position: { lat: parseFloat(building.latitude), lng: parseFloat(building.longitude) },
@@ -64,22 +67,37 @@ function searchBuilding(){
                     scaledSize: new google.maps.Size(75, 75)
                 }
             });
-            buildingMarker.addListener('click', () => {
-                console.log(`Clicked on marker: ${building.name}`);
+            // buildingMarker.addListener('click', () => {
+            //     console.log(`Clicked on marker: ${building.name}`);
+            // });
+            buildingCircle = new google.maps.Circle({
+                strokeColor: '#C9B2CE',
+                strokeOpacity: 0.20,
+                stokeWeight: 1.5,
+                fillColor: '#C9B2CE',
+                fillOpacity: 0.20,
+                map: map,
+                center: buildingMarker.getPosition(),
+                radius: 100,
+
             });
 
             map.setCenter(buildingMarker.getPosition());
-            map.setZoom(18);
+            map.setZoom(18.5);
 
             const radius = 150;
             parkingMarkers.forEach(marker => {
                 const distance = google.maps.geometry.spherical.computeDistanceBetween(
                     buildingMarker.getPosition(), marker.getPosition());
+                    if(currentVehicleType === 'all' || marker.vehicleType === currentVehicleType){
                     if(distance <= radius){
-                        marker.setMap(map);
+                        marker.setMap(true);
                     }else{
-                        marker.setMap(null);
+                        marker.setMap(false);
                     }
+                } else{
+                    marker.setVisible(false);
+                }
                 });
             })
             .catch(error => {
@@ -93,3 +111,23 @@ function searchBuilding(){
                 searchBuilding();
             }
         });
+        let currentVehicleType = 'all';
+        $('#btn-all').on('click', function(){
+            filterMarkers('all');
+        });
+        $('#btn-car').on('click', function(){
+            filterMarkers('car');
+        });
+        $('#btn-motorbike').on('click', function(){
+            filterMarkers('motorbike');
+        });
+        function filterMarkers (vehicleType){
+            currentVehicleType = vehicleType;
+            parkingMarkers.forEach(marker => {
+                if (vehicleType === 'all' || marker.vehicleType === vehicleType){
+                    marker.setVisible(true);
+                } else {
+                    marker.setVisible(false);
+                }
+            });
+        }
