@@ -74,10 +74,10 @@ $(document).ready(async function() {
             })
             const result = await request.json()
             console.log(result);
+            latestTimestamp = result.timestamp;
         }catch(e){
             console.log(e);
             alert("Error", e);
-            latestTimestamp = result.timestamp;
         }
         $(this).addClass('active-dislike');
         $('.like-icon').removeClass('active-like');
