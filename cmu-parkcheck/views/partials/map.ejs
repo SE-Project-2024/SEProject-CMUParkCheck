@@ -4,6 +4,32 @@
         text-decoration: underline;
         cursor: pointer;
     }
+    .info-window-link{
+        color:blue;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .parking-situation-meter {
+        position: relative;
+        width: 100%;
+        height: 20px;
+        background-color: whitesmoke;
+        display: flex;
+        overflow: hidden;
+    }
+    .positive-feedback, .negative-feedback {
+        height: 100%;
+    }
+    .positive-feedback {
+        background-color: green;
+        width: 50%;
+        transition: width 0.3s ease-in-out;
+    }
+    .negative-feedback {
+        background-color: red;
+        width: 50%;
+        transition: width 0.3s ease-in-out;
+    }
 </style>
 <div id="map"></div>
 <script>
@@ -71,6 +97,10 @@
                 });
                 const infoWindowContent = `
                 <div class="info-window">
+                    <div class="parking-situation-meter">
+                        <div class="positive-feedback" id="green-${parking_area.id}"></div>
+                        <div class="negative-feedback" id="red-${parking_area.id}"></div>
+                    </div>
                     <h3>${parking_area.name}</h3>
                     <p>${parking_area.latitude} , ${parking_area.longitude}</p>
                     <div class="info-window-link" onclick="openParkingDetails(${parking_area.id})">See more</div>
@@ -84,12 +114,33 @@
                     console.log(`Clicked on marker: ${parking_area.name}`);
                     infoWindow.setContent(infoWindowContent);
                     infoWindow.open(map, marker);
+                    updateMeter(parking_area.id);
                 });
                 parkingMarkers.push(marker);
             });
         })
         .catch(error => console.error('Error fetching parking areas: ', error));
     }
+    function updateMeter(parkingAreaId) {
+        fetch(`http://localhost:3000/api/feedback/${parkingAreaId}`)
+        .then(response => response.json())
+        .then(feedback => {
+            console.log(`Feedback data for parking area ${parkingAreaId}: `, feedback);
+            const likeCount = feedback.likes ? feedback.likes : 0;
+            const dislikeCount = feedback.dislikes ? feedback.dislikes : 0;
+            const total = likeCount + dislikeCount;
+            let likePercentage = 50;
+            let dislikePercentage = 50;
 
+            if (total > 0) {
+                likePercentage = (likeCount / total) * 100;
+                dislikePercentage = (dislikeCount / total) * 100;
+            }
+
+            document.getElementById(`green-${parkingAreaId}`).style.width = `${likePercentage}%`;
+            document.getElementById(`red-${parkingAreaId}`).style.width = `${dislikePercentage}%`;
+        })
+        .catch(error => console.error(`Error fetching feedback for parking area ${parkingAreaId}: `, error));
+    }
 </script>
 <script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyARbNYm3tKrpe52ERJZbUhHhVkrUxJrKZE&libraries=geometry&callback=initMap" async defer></script>

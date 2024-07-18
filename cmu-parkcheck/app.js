@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Jireh410.",
+    password: "Kard_1539",
     database: "cmu_parkcheck"
 });
 
@@ -35,9 +35,13 @@ app.get('/', (req, res) => {
 
 app.get('/api/feedback/:parkingAreaId', (req, res) => {
     const parkingAreaId = req.params.parkingAreaId;
-    connection.query('SELECT positive_feedback, COUNT(*) AS count FROM feedback WHERE parking_area_id = ? GROUP BY positive_feedback', [parkingAreaId], (error, results) => {
-        console.log(results);
-
+    const query = `
+        SELECT positive_feedback, COUNT(*) AS count, MAX(visit_time) AS latest_feedback_time 
+        FROM feedback 
+        WHERE parking_area_id = ? 
+        GROUP BY positive_feedback
+    `;
+    connection.query(query, [parkingAreaId], (error, results) => {
         if (error) throw error;
         const feedback = { likes: 0, dislikes: 0 };
         results.forEach(row => {
