@@ -3,6 +3,7 @@
 
 <div class="info-feedback">
     <div class="detail-clock"><%- include("../partials/time") %></div>
+    <p id="timestamp">No feedback yet.</p>
       <div class="word">
         <div class="parking-situation-meter">
             <div class="positive-feedback" id="green"></div>
@@ -13,12 +14,11 @@
         <p><a href="<%= parkingArea.google_maps_link %>"><img src="/img/maps_logo.png" alt="maps_photo"></a></p>
         </div>
     </div>
-    <h2>Did you have parking space?</h2>
+    <h2>Did you find a parking space?</h2>
     <div class="like">
         <i class='bx bx-like like-icon'></i>
         <i class='bx bx-dislike dislike-icon' ></i>
     </div>
-    <p id="timestamp">No feedback yet.</p>
     <input type="hidden" value="<%= parkingArea.id %>" id="parkingId">
 
 <script src="https://code.jquery.com/jquery-3.6.1.js"
