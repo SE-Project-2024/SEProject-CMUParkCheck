@@ -9,6 +9,7 @@ body, html {
     box-sizing: border-box;
     background-color: #ffffff;
 }
+
 @media (max-width: 811px) {
     .header .logo img {
         width: 250px; /* Smaller logo on small screens */

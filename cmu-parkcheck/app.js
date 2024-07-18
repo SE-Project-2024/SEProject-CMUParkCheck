@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Jireh410.",
+    password: "Kard_1539",
     database: "cmu_parkcheck"
 });
 
@@ -47,6 +47,9 @@ app.get('/api/feedback/:parkingAreaId', (req, res) => {
                 feedback.dislikes = row.count;
             }
         });
+        if (results.length > 0) {
+            feedback.latestFeedbackTime = results[0].latest_feedback_time;
+        }
         res.json(feedback);
     });
 });
@@ -56,7 +59,7 @@ app.post('/api/feedback', (req, res) => {
     connection.query('INSERT INTO feedback (parking_area_id, visit_time, positive_feedback) VALUES (?, NOW(), ?)', [parkingAreaId, positiveFeedback], (error, results) => {
         console.log(req.body);
         if (error) throw error;
-        res.status(201).json({  });
+        res.status(201).json({ success: true, timestamp: new Date().toISOString() });
 
     });
 });

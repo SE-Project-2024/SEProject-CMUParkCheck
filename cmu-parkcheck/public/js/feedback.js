@@ -7,6 +7,7 @@ $(document).ready(async function() {
     console.log(parkingStat);
     let likeCount = parkingStat.likes? parkingStat.likes: 0;
     let dislikeCount = parkingStat.dislikes? parkingStat.dislikes: 0;
+    let latestTimestamp = parkingStat.latestFeedbackTime ? parkingStat.latestFeedbackTime : null;
 
     function updateMeter() {
         const total = likeCount + dislikeCount;
@@ -20,6 +21,14 @@ $(document).ready(async function() {
 
         $('#green').css('width', `${likePercentage}%`);
         $('#red').css('width', `${dislikePercentage}%`);
+    }
+
+    function updateTimestampUI(timestamp) {
+        if (timestamp) {
+            $('#timestamp').text(`Last feedback at: ${new Date(timestamp).toLocaleString()}`);
+        } else {
+            $('#timestamp').text('No feedback yet.');
+        }
     }
 
     function updateLocalStorage() {
@@ -40,6 +49,7 @@ $(document).ready(async function() {
             })
             const result = await request.json()
             console.log(result);
+            latestTimestamp = result.timestamp;
         }catch(e){
             console.log(e);
             alert("Error", e);
@@ -48,6 +58,7 @@ $(document).ready(async function() {
         $('.dislike-icon').removeClass('active-dislike');
         updateMeter();
         updateLocalStorage();
+        updateTimestampUI(latestTimestamp);
     });
 
     $('.dislike-icon').click(async function() {
@@ -66,14 +77,16 @@ $(document).ready(async function() {
         }catch(e){
             console.log(e);
             alert("Error", e);
+            latestTimestamp = result.timestamp;
         }
         $(this).addClass('active-dislike');
         $('.like-icon').removeClass('active-like');
         updateMeter();
         updateLocalStorage();
+        updateTimestampUI(latestTimestamp);
     });
 
     // Initial state
     updateMeter();
-
+    updateTimestampUI(latestTimestamp);
 });
