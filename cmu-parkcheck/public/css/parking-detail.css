@@ -40,12 +40,12 @@
 #timestamp{
     size: 10px;
     position: absolute;
-    top: 37%;
+    top: 35%;
 }
 .gmaps_link{
     position: absolute;
-    top: 52%;
-    right: 12%; 
+    top: 44%;
+    right: 15%; 
     width: 5%;
     height: 9%;
     visibility: hidden;
