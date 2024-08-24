@@ -85,8 +85,20 @@ $(document).ready(async function() {
         updateLocalStorage();
         updateTimestampUI(latestTimestamp);
     });
+    // Toggle the visibility of the time slots on click and scroll down when shown
+    $("#toggleTime").click(function() {
+        $(".time").slideToggle("slow", function() {
+            if ($(this).is(":visible")) {
+                // Scroll smoothly to the time slots after they are shown
+                $('html, body').animate({
+                    scrollTop: $(".time").offset().top
+                }, 800); // Adjust the speed of scrolling (800ms)
+            }
+        });
+    });
 
     // Initial state
     updateMeter();
     updateTimestampUI(latestTimestamp);
 });
+

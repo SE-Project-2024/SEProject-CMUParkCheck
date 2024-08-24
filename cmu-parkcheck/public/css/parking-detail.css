@@ -108,3 +108,24 @@
     width: 50%;
     transition: width 0.3s ease-in-out;
 }
+.checkTime {
+    text-align: left;
+    margin-left: 50px;
+    width: 100%; 
+    display: flex;
+    justify-content: flex-start; /* Align content to the left */
+    text-decoration: underline;
+    font-size: 18px;
+    cursor: pointer;
+}
+.time {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 10px; /* Space between items (optional) */
+    column-gap: 30px; 
+}
+
+.time h3 {
+    margin: 5px 0;
+    text-align: left; 
+}
