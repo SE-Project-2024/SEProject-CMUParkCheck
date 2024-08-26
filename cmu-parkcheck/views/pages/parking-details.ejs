@@ -31,10 +31,14 @@
             <h3>16.01 to 18.00</h3>
             <h3>Beyond 18:00</h3>
         </div>
-        <div id="location-prompt" style="display:none;">
-            <p>Woul you like to save your parking location?</p>
-            <button onclick="saveParkingLocation()">Yes</button>
-            <button onclick="cancelSave()">No</button>
+        <div id="location-prompt" class="location-prompt-overlay" style="display:none;">
+            <div class="overlay-content">
+            <p>Would you like to save your parking location?</p>
+                <div class="button-container">
+                <button class="yes" onclick="saveParkingLocation()">Yes</button>
+                <button class="no"onclick="cancelSave()">No</button>
+            </div>
+            </div>
         </div>
 <script src="https://code.jquery.com/jquery-3.6.1.js"
         integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="

@@ -69,6 +69,10 @@ $(document).ready(async function() {
             });
     }
 
+    window.cancelSave = function(){
+        $('#overlay').hide();
+    }
+
     $('.like-icon').click(async function() {
         likeCount++;
         try{
@@ -135,7 +139,7 @@ $(document).ready(async function() {
         if($(this).text() === 'Yes'){
             saveParkingLocation();
         } else {
-            $('#location-prompt').hide();
+            cancelSave();
         }
     });
 
