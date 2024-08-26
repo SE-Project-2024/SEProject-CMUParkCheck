@@ -176,7 +176,7 @@
     display: inline-block;
 }
 .overlay-content button:hover{
-    opacity: 0.9;
+    opacity: 0.5;
 }
 
 .overlay-content .yes{

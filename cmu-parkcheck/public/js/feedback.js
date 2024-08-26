@@ -42,7 +42,7 @@ $(document).ready(async function() {
 
     async function saveParkingLocation(){
         navigator.geolocation.getCurrentPosition(async function(position){
-            const latitude = psoition.coords.latitude;
+            const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             const parkingId = idInput.value;
 
@@ -69,8 +69,8 @@ $(document).ready(async function() {
             });
     }
 
-    window.cancelSave = function(){
-        $('#overlay').hide();
+    function cancelSave(){
+        $('#location-prompt').hide();
     }
 
     $('.like-icon').click(async function() {
@@ -135,13 +135,13 @@ $(document).ready(async function() {
         });
     });
 
-    $('#location-prompt button').click(function() {
-        if($(this).text() === 'Yes'){
-            saveParkingLocation();
-        } else {
-            cancelSave();
-        }
+    $('#location-prompt .yes').click(function() {
+        saveParkingLocation();
     });
+    $('#location-prompt .no').click(function(){
+        cancelSave();
+    });
+        
 
     // Initial state
     updateMeter();
