@@ -127,6 +127,18 @@ app.post('/api/feedback', (req, res) => {
         res.json({ success: true});
     });
 });
+function saveLocation(parkingId, latitude, longitude){
+    return new Promise((resolve, reject) => {
+        const query = "INSERT INTO saved_parking_locations (parking_area_id, latitude, longitude, saved_at) VALUES (?, ?, ?, NOW())";
+        connection.query(query, [parkingId, latitude, longitude], (err) => {
+            if(err){
+                return reject(err);
+            }
+            console.log(`Saving location: ${parkingId}, ${latitude}, ${longitude}`);
+            resolve();
+        });
+    });
+}
 
 app.post('/api/save-parking-location', (req, res) => {
     const { parkingId, latitude, longitude } = req.body;

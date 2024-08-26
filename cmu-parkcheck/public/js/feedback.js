@@ -46,6 +46,8 @@ $(document).ready(async function() {
             const longitude = position.coords.longitude;
             const parkingId = idInput.value;
 
+            console.log('Vehicle Location: ', { parkingId, latitude, longitude});
+
             try{
                 const payload = { parkingId, latitude, longitude };
                 const response = await fetch('http://localhost:3000/api/save-parking-location',{
@@ -56,21 +58,26 @@ $(document).ready(async function() {
                     body: JSON.stringify(payload),
                 });
 
+                if (!response.ok){
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
                 const result = await response.json();
                 console.log('Parking location saved:', result);
                 $('#location-prompt').hide();
             } catch(error){
                 console.error('Error saving location:', error);
-                alert('Failed to save Parking location.');
+                alert('Failed to save Parking location.' + error.message);
             }
             }, function(error){
                 console.error('Error getting location:', error);
-                alert('Failed to get location');
+                alert('Failed to get location' + error.message);
             });
     }
 
     function cancelSave(){
-        $('#location-prompt').hide();
+        $('#location-prompt').hide(); 
+        window.location.href = '/';
     }
 
     $('.like-icon').click(async function() {
