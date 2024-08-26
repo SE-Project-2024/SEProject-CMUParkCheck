@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Kard_1539",
+    password: "Jireh410.",
     database: "cmu_parkcheck"
 });
 
@@ -128,10 +128,17 @@ app.post('/api/feedback', (req, res) => {
     });
 });
 
+app.post('/api/save-parking-location', (req, res) => {
+    const { parkingId, latitude, longitude } = req.body;
+
+    saveLocation(parkingId, latitude, longitude)
+    .then(() => res.json({ success: true}))
+    .catch(err => res.status(500).json({error: 'Failed to save location'}));
+});
+
 
 const PORT = 3000;
 app.listen(PORT, function () {
     console.log(`Server started on port ${PORT}`);
-    console.log("http://localhost:3000/ (home page)");
-    console.log("http://localhost:3000/parking-details");
+    console.log("http://localhost:3000/");
 });

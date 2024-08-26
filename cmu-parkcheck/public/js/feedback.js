@@ -36,6 +36,39 @@ $(document).ready(async function() {
         localStorage.setItem('dislikeCount', dislikeCount);
     }
 
+    function showSaveParkingPrompt(){
+        $('#location-prompt').show();
+    }
+
+    async function saveParkingLocation(){
+        navigator.geolocation.getCurrentPosition(async function(position){
+            const latitude = psoition.coords.latitude;
+            const longitude = position.coords.longitude;
+            const parkingId = idInput.value;
+
+            try{
+                const payload = { parkingId, latitude, longitude };
+                const response = await fetch('http://localhost:3000/api/save-parking-location',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                const result = await response.json();
+                console.log('Parking location saved:', result);
+                $('#location-prompt').hide();
+            } catch(error){
+                console.error('Error saving location:', error);
+                alert('Failed to save Parking location.');
+            }
+            }, function(error){
+                console.error('Error getting location:', error);
+                alert('Failed to get location');
+            });
+    }
+
     $('.like-icon').click(async function() {
         likeCount++;
         try{
@@ -59,6 +92,7 @@ $(document).ready(async function() {
         updateMeter();
         updateLocalStorage();
         updateTimestampUI(latestTimestamp);
+        showSaveParkingPrompt();
     });
 
     $('.dislike-icon').click(async function() {
@@ -95,6 +129,14 @@ $(document).ready(async function() {
                 }, 800); // Adjust the speed of scrolling (800ms)
             }
         });
+    });
+
+    $('#location-prompt button').click(function() {
+        if($(this).text() === 'Yes'){
+            saveParkingLocation();
+        } else {
+            $('#location-prompt').hide();
+        }
     });
 
     // Initial state
