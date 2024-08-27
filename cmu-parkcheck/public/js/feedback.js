@@ -130,7 +130,6 @@ $(document).ready(async function() {
         updateLocalStorage();
         updateTimestampUI(latestTimestamp);
     });
-    // Toggle the visibility of the time slots on click and scroll down when shown
     $("#toggleTime").click(function() {
         $(".time").slideToggle("slow", function() {
             if ($(this).is(":visible")) {
@@ -141,6 +140,14 @@ $(document).ready(async function() {
             }
         });
     });
+    $(document).ready(function(){
+        $('.dislike-icon').on('click', function(){
+            $('.alternative-box').slideDown("slow");
+            $('html, body').animate({
+                scrollTop: $(".alternative-box").offset().top
+            }, 800);
+        });
+    })
 
     $('#location-prompt .yes').click(function() {
         saveParkingLocation();
