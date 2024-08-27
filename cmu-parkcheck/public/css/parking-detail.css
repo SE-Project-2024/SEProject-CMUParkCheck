@@ -35,6 +35,16 @@
     font-weight: bold;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+.word p{
+    margin-top:5%;
+    margin-bottom:0px;
+}
+.info-feedback h2{
+    font-size: xx-large;
+    font-style: italic;
+    margin-top: 5%;
+    margin-bottom: 0;
+}
 #timestamp{
     size: 10px;
     position: absolute;
@@ -42,8 +52,8 @@
 }
 .gmaps_link{
     position: absolute;
-    top: 44%;
-    right: 15%; 
+    top: 55%;
+    right: 14%; 
     width: 5%;
     height: 9%;
     visibility: hidden;
@@ -60,6 +70,7 @@
 
 .like {
     margin-top: 3%; 
+    margin-top: 1%; /* Adjust spacing between text and icons */
 }
 
 .like i {
@@ -85,7 +96,7 @@
 .parking-situation-meter {
     position: relative;
     width: 75vw;
-    height: 20px;
+    height: 30px;
     background-color: whitesmoke;
     display: flex;
     overflow: hidden;
@@ -105,6 +116,17 @@
     background-color: red;
     width: 50%;
     transition: width 0.3s ease-in-out;
+}
+
+.status-text{
+    position: absolute;
+    top: 48%;
+    left: 12%;
+    font-size: 16px;
+    padding: 0 10px;
+    border-radius: 5px;
+    z-index: 10;
+
 }
 .checkTime {
     text-align: left;

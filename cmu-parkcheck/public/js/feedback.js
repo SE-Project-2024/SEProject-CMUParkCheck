@@ -9,6 +9,9 @@ $(document).ready(async function() {
     let dislikeCount = parkingStat.dislikes? parkingStat.dislikes: 0;
     let latestTimestamp = parkingStat.latestFeedbackTime ? parkingStat.latestFeedbackTime : null;
 
+    const savedFeedback = localStorage.getItem('latestFeedback');
+    let latestFeedback = savedFeedback ? JSON.parse(savedFeedback) : null;
+
     function updateMeter() {
         const total = likeCount + dislikeCount;
         let likePercentage = 50;
@@ -21,11 +24,27 @@ $(document).ready(async function() {
 
         $('#green').css('width', `${likePercentage}%`);
         $('#red').css('width', `${dislikePercentage}%`);
+        updateStatusText(likePercentage, dislikePercentage);
     }
-
-    function updateTimestampUI(timestamp) {
+    function updateStatusText(likePercentage, dislikePercentage){
+        const statusText = $('#statusText');
+        if (likePercentage > dislikePercentage){
+            statusText.text('STATUS: Available');
+        } else if (dislikePercentage > likePercentage){
+            statusText.text('STATUS: Full');
+        } else {
+            statusText.text('STATUS: Available');
+        }
+    }
+    function updateTimestampUI(timestamp, feedback) {
+        let feedbackText = '';
+        let feedbackColor = 'black';
         if (timestamp) {
-            $('#timestamp').text(`Last feedback at: ${new Date(timestamp).toLocaleString()}`);
+            if (feedback){
+                feedbackText = ` - <span style="color: ${feedback.color};">${feedback.text}</span>`;
+                feedbackColor = 'black';
+            }
+            $('#timestamp').html(`Last feedback at: ${new Date(timestamp).toLocaleString()}${feedbackText}`);
         } else {
             $('#timestamp').text('No feedback yet.');
         }
@@ -80,6 +99,10 @@ $(document).ready(async function() {
         window.location.href = '/';
     }
 
+    function saveFeedbackToLocalStorage(feedback){
+        localStorage.setItem('latestFeedback', JSON.stringify(feedback));
+    }
+
     $('.like-icon').click(async function() {
         likeCount++;
         try{
@@ -94,6 +117,8 @@ $(document).ready(async function() {
             const result = await request.json()
             console.log(result);
             latestTimestamp = result.timestamp;
+            latestFeedback = { text: "THUMBS UP", color: "green"};
+            saveFeedbackToLocalStorage(latestFeedback);
         }catch(e){
             console.log(e);
             alert("Error", e);
@@ -102,7 +127,7 @@ $(document).ready(async function() {
         $('.dislike-icon').removeClass('active-dislike');
         updateMeter();
         updateLocalStorage();
-        updateTimestampUI(latestTimestamp);
+        updateTimestampUI(latestTimestamp, latestFeedback);
         showSaveParkingPrompt();
     });
 
@@ -120,6 +145,8 @@ $(document).ready(async function() {
             const result = await request.json()
             console.log(result);
             latestTimestamp = result.timestamp;
+            latestFeedback = { text: "THUMBS DOWN", color: "red"};
+            saveFeedbackToLocalStorage(latestFeedback);
         }catch(e){
             console.log(e);
             alert("Error", e);
@@ -131,6 +158,7 @@ $(document).ready(async function() {
         updateLocalStorage();
         updateTimestampUI(latestTimestamp);
         $('#alternative-prompt').show();
+        updateTimestampUI(latestTimestamp, latestFeedback);
     });
     $("#toggleTime").click(function() {
         $(".time").slideToggle("slow", function() {
@@ -162,6 +190,6 @@ $(document).ready(async function() {
     });
         
     updateMeter();
-    updateTimestampUI(latestTimestamp);
+    updateTimestampUI(latestTimestamp, latestFeedback);
 });
 
