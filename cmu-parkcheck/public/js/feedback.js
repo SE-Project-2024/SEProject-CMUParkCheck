@@ -126,27 +126,32 @@ $(document).ready(async function() {
         }
         $(this).addClass('active-dislike');
         $('.like-icon').removeClass('active-like');
+        
         updateMeter();
         updateLocalStorage();
         updateTimestampUI(latestTimestamp);
+        $('#alternative-prompt').show();
     });
     $("#toggleTime").click(function() {
         $(".time").slideToggle("slow", function() {
             if ($(this).is(":visible")) {
-                // Scroll smoothly to the time slots after they are shown
                 $('html, body').animate({
                     scrollTop: $(".time").offset().top
-                }, 800); // Adjust the speed of scrolling (800ms)
+                }, 800); 
             }
         });
     });
-    $(document).ready(function(){
-        $('.dislike-icon').on('click', function(){
-            $('.alternative-box').slideDown("slow");
+    
+    $('#alternative-prompt .yes').click(function() {
+        $('#alternative-prompt').hide();
+        $('.alternative-box').slideDown('slow', function() {
             $('html, body').animate({
-                scrollTop: $(".alternative-box").offset().top
+                scrollTop: $('.alternative-box').offset().top
             }, 800);
         });
+    });
+    $('#alternative-prompt .no').click(function() {
+        window.location.href= '/'
     })
 
     $('#location-prompt .yes').click(function() {
@@ -156,8 +161,6 @@ $(document).ready(async function() {
         cancelSave();
     });
         
-
-    // Initial state
     updateMeter();
     updateTimestampUI(latestTimestamp);
 });

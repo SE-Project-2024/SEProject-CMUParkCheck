@@ -17,7 +17,6 @@
     top: 25%;
     left: 50%;
     align-self: center;
-    /* padding: 20px 40px 20px 40px; */
     border-radius: 10px;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif ;
@@ -25,7 +24,6 @@
     font-weight: bolder;
     text-decoration-color: white;
     color: white;
-    /* box-shadow: -4px -5px 50px 10px white; */
     transform: translate(-50%);
     z-index: 1000;
     white-space:nowrap ;
@@ -61,13 +59,13 @@
 }
 
 .like {
-    margin-top: 3%; /* Adjust spacing between text and icons */
+    margin-top: 3%; 
 }
 
 .like i {
     font-size: 5vw;
     margin: 0 2vw; /* Adjust spacing between icons */
-    color: #000; /* Adjust icon color */
+    color: #000; 
 }
 .like i.like-icon:hover {
     color: green;
@@ -188,10 +186,68 @@
     background-color: rgb(235, 6, 6);
 }
 
+/* comfirmation */
+.alternative-prompt-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.alternative-overlay-content{
+    width: 20%;
+    height: 20%;
+    background-color: white;
+    padding: 2%;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.9%;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.alternative-overlay-content p{
+    margin: 0 0 15px;
+    font-size: 2vw;
+    text-align: center;
+}
+
+.alternative-overlay-content .alternative-button-container{
+    display: flex;
+    gap: 10px;
+}
+
+.alternative-overlay-content button{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: medium;
+    display: inline-block;
+}
+.alternative-overlay-content button:hover{
+    opacity: 0.5;
+}
+
+.alternative-overlay-content .yes{
+    background-color: rgb(74, 235, 6);
+}
+
+.alternative-overlay-content .no{
+    background-color: rgb(235, 6, 6);
+}
+
 .alternative-box{
     width: 90%;
     height: 225px;
-    background-color: rgb(200, 200, 200);
+    background-color: rgb(243, 243, 243);
     border-radius: 50px;
     margin-top: 20px;
     margin-bottom: 20px;
