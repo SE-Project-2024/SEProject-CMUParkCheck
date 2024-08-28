@@ -60,37 +60,23 @@ $(document).ready(async function() {
     }
 
     async function saveParkingLocation(){
-        navigator.geolocation.getCurrentPosition(async function(position){
+        navigator.geolocation.getCurrentPosition(
+            function(position){
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             const parkingId = idInput.value;
 
-            console.log('Vehicle Location: ', { parkingId, latitude, longitude});
-
-            try{
-                const payload = { parkingId, latitude, longitude };
-                const response = await fetch('http://localhost:3000/api/save-parking-location',{
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload),
-                });
-
-                if (!response.ok){
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                console.log('Parking location saved:', result);
-                $('#location-prompt').hide();
-            } catch(error){
-                console.error('Error saving location:', error);
-                alert('Failed to save Parking location.' + error.message);
-            }
+            console.log('Vehicle Location: ', { latitude, longitude });
+             $('#location-info').text(`Latitude: ${latitude}, Longitude: ${longitude}`);  
+             $('#location-prompt').hide();
             }, function(error){
                 console.error('Error getting location:', error);
                 alert('Failed to get location' + error.message);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
             });
     }
 
