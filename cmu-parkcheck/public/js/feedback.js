@@ -69,6 +69,8 @@ $(document).ready(async function() {
             console.log('Vehicle Location: ', { latitude, longitude });
              $('#location-info').text(`Latitude: ${latitude}, Longitude: ${longitude}`);  
              $('#location-prompt').hide();
+             localStorage.setItem('savedLocation', JSON.stringify({ latitude, longitude }));
+             window.location.href = '/?parkingSaved=true';
             }, function(error){
                 console.error('Error getting location:', error);
                 alert('Failed to get location' + error.message);
