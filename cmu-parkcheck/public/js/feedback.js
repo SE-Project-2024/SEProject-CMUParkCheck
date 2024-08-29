@@ -25,6 +25,24 @@ $(document).ready(async function() {
         $('#green').css('width', `${likePercentage}%`);
         $('#red').css('width', `${dislikePercentage}%`);
         updateStatusText(likePercentage, dislikePercentage);
+
+        $('.time-period').each(function() {
+            const periodLikePercentage = likePercentage;
+            const periodDislikePercentage = dislikePercentage;
+            if (periodLikePercentage > periodDislikePercentage) {
+                $(this).find('.green-car').show();
+                $(this).find('.red-car').hide();
+                $(this).find('.yellow-car').hide();
+            } else if (periodDislikePercentage > periodLikePercentage) {
+                $(this).find('.green-car').hide();
+                $(this).find('.red-car').show();
+                $(this).find('.yellow-car').hide();
+            } else {
+                $(this).find('.green-car').hide();
+                $(this).find('.red-car').hide();
+                $(this).find('.yellow-car').show();
+            }
+        });
     }
     function updateStatusText(likePercentage, dislikePercentage){
         const statusText = $('#statusText');
