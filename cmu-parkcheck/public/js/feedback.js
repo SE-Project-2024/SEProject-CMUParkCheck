@@ -47,11 +47,11 @@ $(document).ready(async function() {
     function updateStatusText(likePercentage, dislikePercentage){
         const statusText = $('#statusText');
         if (likePercentage > dislikePercentage){
-            statusText.text('STATUS: Available');
+            statusText.text('Possibility: AVAILABLE');
         } else if (dislikePercentage > likePercentage){
-            statusText.text('STATUS: Full');
+            statusText.text('Possibility: FULL');
         } else {
-            statusText.text('STATUS: Available');
+            statusText.text('Possibility: AVAILABLE');
         }
     }
     function updateTimestampUI(timestamp, feedback) {
@@ -182,6 +182,39 @@ $(document).ready(async function() {
             $('html, body').animate({
                 scrollTop: $('.alternative-box').offset().top
             }, 800);
+        });
+        navigator.geolocation.getCurrentPosition(async function(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            try{
+                const response = await fetch(`/api/nearby-parking?latitude=${latitude}&longitude=${longitude}`);
+                const nearbyParking = await response.json();
+
+                const uniqueParking = Array.from(new Map(nearbyParking.map(item => [item.id, item])).values());
+
+                const parkingList = $('#parking-list');
+                parkingList.empty();
+
+                if(uniqueParking.length > 0){
+                    uniqueParking.forEach(parking => {
+                        parkingList.append(`
+                            <div class="parking-item">
+                            <p><a href="/parking-details/${parking.id}">${parking.name}</a></p>
+                            <p>${parking.distance.toFixed(2)} km away</p>
+                            </div>
+                        `);
+                    });
+                } else {
+                    alternativeBox.append('<p>No nearby parking areas found. </p>');
+                }
+            } catch(error){
+                console.error('Error fetching nearby parking areas: ', error);
+                $('.alternative-box').append('<p>Failed to load nearby parking areas. </p>');
+            }
+        }, function(error){
+            console.error("Error getting locations: ", error);
+            $('.alternative-box').append('<p>Failed to get location</p>');
         });
     });
     $('#alternative-prompt .no').click(function() {

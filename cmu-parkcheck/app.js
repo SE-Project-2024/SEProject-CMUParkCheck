@@ -97,6 +97,27 @@ app.get('/api/parking_areas', (req, res) => {
         res.json(results);
     });
 });
+app.get('/api/nearby-parking', (req, res) => {
+    const { latitude, longitude } = req.query;
+    if (!latitude || !longitude){
+        return res.status(400).json({ error: "Missing latitude or longitude"});
+    }
+    const maxDistance = 0.15;
+
+    const query = `
+    SELECT DISTINCT id, name, latitude, longitude, ( 6371 * acos( cos( radians(?) ) * cos(radians( latitude )) * cos( radians( longitude ) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance
+    FROM parking_areas
+    HAVING distance < ?
+    ORDER by distance`;
+
+    connection.query(query, [latitude, longitude, latitude, maxDistance], (err, results) => {
+        if(err){
+            console.error("Error fetching nearby areas: ", err);
+            return res.status(500).json({ error: "Internal Server Error"});
+        }
+        res.json(results);
+    });
+});
 app.get('/api/buildings/:input', (req, res) => {
     const input = req.params.input;
     const query = `

@@ -9,7 +9,7 @@
             <div class="positive-feedback" id="green"></div>
             <div class="negative-feedback" id="red"></div>
         </div>
-        <div class="status-text" id="statusText">STATUS: Available</div>
+        <div class="status-text" id="statusText">Possibility: AVAILABLE</div>
         <p><%= parkingArea.name %></p>
         <div class="gmaps_link">
         <p><a href="<%= parkingArea.google_maps_link %>"><img src="/img/maps_logo.png" alt="maps_photo"></a></p>
@@ -21,7 +21,8 @@
         <i class='bx bx-dislike dislike-icon' ></i>
     </div>
     <div class="alternative-box" style="display: none;">
-        <p>Near parking you maybe interested with...</p>
+        <h4>Alternative parking locations near you </h4>
+        <div class="parking-list" id="parking-list"></div>
     </div>
     <input type="hidden" value="<%= parkingArea.id %>" id="parkingId">
     <div class="checkTime">
