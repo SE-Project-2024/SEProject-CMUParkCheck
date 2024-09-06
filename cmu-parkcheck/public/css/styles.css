@@ -1,187 +1,175 @@
-.header{
-    background-color: #fbf2fc ;
-}
-
-/* Reset some basic styles */
+/* Global Styles */
 body, html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: #ffffff;
+    overflow: hidden;
 }
 
-@media (max-width: 811px) {
-    .header .logo img {
-        width: 250px; /* Smaller logo on small screens */
-        height: 100px;
-    }
+/* Header */
+.header {
+    background-color: #fbf2fc;
 }
 
-/* Style the navigation bar */
+.header .logo img {
+    width: 100%; /* Adjust based on container */
+    max-width: 250px; /* Ensure it doesn't get too large */
+    height: auto;
+}
+
+/* Navigation Bar */
 .navbar {
-    background-color: #872698 ; 
-    overflow: hidden; /* Clear floats */
-    text-align: left; /* Center-align the items */
-    padding: 0.5px 0; /* Vertical padding */
-    
+    background-color: #872698;
+    overflow: hidden;
+    text-align: left;
+    padding: 5px 0;
+    display: flex;
+
 }
 
-/* Style the links inside the navbar */
 .navbar a {
-    color: #ffffff; 
-    padding: 14px 20px; /* Padding around the links */
-    text-decoration: none; /* Remove underline */
-    font-family: Arial, Helvetica, sans-serif; /* Font style */
-    font-size: 1vw; /* Font size */
-    display: inline-block; /* Inline-block to respect padding */
+    color: #ffffff;
+    padding: 7px 10px;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem; /* Use rem for better scaling */
+    display: inline-block;
 }
 
-/* Change font weight on hover */
 .navbar a:hover {
-    font-weight: bold; /* Bold text on hover */
+    font-weight: bold;
 }
 
-/* Add responsiveness for smaller screens */
+/* Mobile Adjustments */
 @media (max-width: 811px) {
     .navbar a {
-        display: block; /* Stack links vertically */
-        padding: 10px 0; /* Adjust padding */
-        font-size: 2vw;
+        display: block;
+        padding: 5px;
+        font-size: medium;
+    }
+    
+    .header .logo img {
+        width: 80%; /* Scale logo on smaller screens */
     }
 }
-.home{
-    font-weight: bold
-}
+
+/* Box */
 .box {
-    width: 600px;  /* Set the width of the box */
-    height: 320px; /* Set the height of the box */
-    background-color: #fbf2fc; 
+    width: 90%; /* Use percentage for width */
+    height: auto; /* Adjust height as needed */
+    background-color: #fbf2fc;
     position: absolute;
-    right: 50px;
-    top: 220px;
+    right: 5%;
+    top: 20%;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
-.input-box input{
-    width: 535px;
-    height: 10px;
-    background:  #fbf2fc;
-    background:  #fbf2fc ;
-    border: none;
-    outline: none;
+
+.input-box input {
+    width: 90%;
+    background: #fbf2fc;
     border: 2px solid rgba(255, 255, 255, .2);
     border-radius: 40px;
-    font-size: 1vw;
-    color:black;
-    padding: 20px 45px 20px 20px;
-    position: absolute;
-    right: 50px;
-    top: 55%;
+    font-size: 1rem; /* Use rem for better scaling */
+    color: black;
+    padding: 10px 20px;
+    margin: 0 auto;
 }
-.input-box input::placeholder{
-    color:rgb(94, 91, 91)
-}
+
 .input-box i {
+    font-size: 1.5rem; /* Adjust size */
     position: absolute;
-    right: 4%;
-    top: 59%;
+    right: 10px;
+    top: 50%;
     transform: translateY(-50%);
-    font-size: 2vw;
 }
-/* time */
-.myclock{
-    position: absolute;
-    top: 35%;
-    left: 78%;
-    align-self: center;
-    padding: 20px 40px 20px 40px;
+
+/* Time */
+.myclock {
+    position: fixed;
+    top: 135px;
+    right: 120px;
+    padding: 10px 20px;
     border-radius: 10px;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: larger;
+    font-size: 1.5rem; /* Adjust font size */
     font-weight: bolder;
-    text-decoration-color: white;
     color: white;
     background-color: #872698;
-    /* box-shadow: -4px -5px 50px 10px white; */
-    transform: translate(-50%);
     z-index: 1000;
+    align-items: center;
 }
 
-#map{
-    flex: 1;
-    height: calc(100vh - 100px);
-    width: 55vw;
-    position: relative;
-}
-@media (max-width: 811px) {
-    .box {
-        height: 15%; 
-        width: 60%;
-        position: absolute;
-        top: 58%; /* Center vertically */
-        left: 50%; /* Center horizontally */
-        transform: translate(-50%, -50%); /* Center the box */
-        background-color: #fbf2fc; /* Background color */
-        display: flex; /* Use flexbox for positioning elements inside */
-        align-items: center; /* Center items vertically */
-        justify-content: center; /* Center items horizontally */
-      
-    }
-    .input-box input{
-        width: 50%; /* Make the box smaller on small screens */
-        height: 10px;   
-        top: 67%;
-        left: 20%;
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-
-    
-    }
-    .input-box i {
-        size: 50px;
-        top: 70%; /* Center vertically */
-        left: 75%; /* Center horizontally */
-        transform: translate(-50%, -50%); /* Center the box */
-        display: flex; /* Use flexbox for positioning elements inside */
-        align-items: center; /* Center items vertically */
-        justify-content: center; /* Center items horizontally */
-    }
-    .myclock{
-        font-size: 2px; /* Adjust font size for smaller screens */
-        
-    }
-    #map{
-        flex: 1; /* Take up remaining space within its container */
-        height: 25vh; /* 40% of viewport height */
-        width: 44vh; /* 40% of viewport height */
-        position: relative;
-        margin: auto; /* Center horizontally */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 10px;
-    }
-}
-.btn-container{
+/* Map */
+#map {
+    height: 65vh; /* Adjust based on viewport height */
+    width: 100%; /* Full width */
     position: absolute;
-    top: 70px;
-    left:10px;
+    bottom: 0;
+    left: 0;
+    z-index: 400;
+}
+
+@media (max-width: 811px) {
+    .input-box {
+        width: 90%; /* Use percentage for width */
+        height: auto; /* Adjust height as needed */
+        position: absolute;
+        left: 5px;
+        top: 26%;
+        padding: 10px;
+        z-index: 500;
+        align-items: center;
+    }
+    .input-box input {
+        width: 90%;
+        top: 0;
+    }
+
+    .input-box i {
+        font-size: 1.2rem; /* Adjust size for mobile */
+    }
+
+    .myclock {
+        font-size: 1rem; /* Adjust font size for smaller screens */
+        align-items: center;
+    }
+
+    #map {
+        height: 65vh; /* Adjust height for mobile */
+        width: 100%;
+    }
+}
+
+/* Button Container */
+.btn-container {
+    position: absolute;
+    top: 300px;
+    left: 10px;
     display: flex;
     flex-direction: column;
     gap: 5px;
     z-index: 1000;
 }
-#map-container{
-    position: relative;
-    width: 100%;
-}
-.btn{
+
+.btn {
     border-radius: 10%;
-    width: auto;
-    background-color:rgb(227, 223, 223);
+    background-color: rgb(227, 223, 223);
     border-color: rgb(227, 223, 223);
+    border-radius: 20px;
 }
-.btn:hover{
+
+.btn:hover {
     background-color: #872698;
     color: white;
 }
+
+@media (max-width: 320px) {
+    .body .myclock{
+        position: fixed;
+        right: 160;
+    }
+}
+

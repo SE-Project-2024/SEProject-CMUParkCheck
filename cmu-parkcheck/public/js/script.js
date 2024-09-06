@@ -73,7 +73,7 @@ function searchBuilding(){
             buildingCircle = new google.maps.Circle({
                 strokeColor: '#C9B2CE',
                 strokeOpacity: 0.20,
-                stokeWeight: 1.5,
+                strokeWeight: 1.5,
                 fillColor: '#C9B2CE',
                 fillOpacity: 0.20,
                 map: map,

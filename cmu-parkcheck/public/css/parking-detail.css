@@ -14,8 +14,8 @@
 .detail-clock{
     position: absolute;
     width: auto;
-    top: 25%;
-    left: 50%;
+    top: 10px;
+    right: -20px;
     align-self: center;
     border-radius: 10px;
     text-align: center;
@@ -39,23 +39,40 @@
     margin-top:5%;
     margin-bottom:0px;
 }
+.word .parking-area-name{
+    font-size:x-large;
+    position: absolute;
+    top: 48%;
+    left: 12%;
+    text-align: center;
+    align-items: center;
+}
 .info-feedback h2{
     font-size: xx-large;
     font-style: italic;
-    margin-top: 5%;
-    margin-bottom: 0;
+    font-family: 'Arial', sans-serif;
+    color: #872698;
+    background-color: #f2f2f2;
+    position: absolute;
+    bottom: 185px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    padding-top: 2%;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 #timestamp{
     size: 10px;
     position: absolute;
-    top: 35%;
+    top: 30%;
+    font-size: small;
 }
 .gmaps_link{
     position: absolute;
-    top: 55%;
-    right: 14%; 
-    width: 5%;
-    height: 9%;
+    top: 50%;
+    right: 8%; 
+    width: 10%;
+    height: 5%;
     visibility: hidden;
 
 }
@@ -69,14 +86,23 @@
 }
 
 .like {
-    margin-top: 3%; 
-    margin-top: 1%; /* Adjust spacing between text and icons */
+    margin: 0;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    position: absolute;
+    bottom: 100px;
+    background-color: #f2f2f2;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    border-top: none;
 }
 
 .like i {
-    font-size: 5vw;
+    font-size: 15vw;
     margin: 0 2vw; /* Adjust spacing between icons */
     color: #000; 
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 .like i.like-icon:hover {
     color: green;
@@ -94,12 +120,15 @@
 }
 
 .parking-situation-meter {
-    position: relative;
-    width: 75vw;
-    height: 30px;
+    position: absolute;
+    top: 37%;
+    right: 5%;
+    width: 90vw;
+    height: 45px;
     background-color: whitesmoke;
     display: flex;
     overflow: hidden;
+    z-index: 1000;
 }
 
 .positive-feedback, .negative-feedback {
@@ -120,8 +149,8 @@
 
 .status-text{
     position: absolute;
-    top: 48%;
-    left: 12%;
+    top: 44%;
+    left: 3%;
     font-size: 16px;
     padding: 0 10px;
     border-radius: 5px;
@@ -139,6 +168,13 @@
     cursor: pointer;
     margin-top: -15px;
 }
+
+#toggleTime{
+    position: absolute;
+    bottom: 0;
+    text-decoration: underline;
+    font-style: italic;
+}
 .time {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Two columns */
@@ -148,7 +184,9 @@
 
 .time h3 {
     margin: 5px 0;
-    text-align: left; 
+    text-align: left;
+    position: fixed;
+    bottom: 0;
 }
 
 .location-prompt-overlay{
