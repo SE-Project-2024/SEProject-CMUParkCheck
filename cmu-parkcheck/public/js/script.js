@@ -114,12 +114,16 @@ function searchBuilding(){
         let currentVehicleType = 'all';
         $('#btn-all').on('click', function(){
             filterMarkers('all');
+            setActiveButton('#btn-all');
         });
         $('#btn-car').on('click', function(){
             filterMarkers('car');
+            setActiveButton('#btn-car');
         });
         $('#btn-motorbike').on('click', function(){
             filterMarkers('motorbike');
+            setActiveButton('#btn-motorbike');
+
         });
         function filterMarkers (vehicleType){
             currentVehicleType = vehicleType;
@@ -130,4 +134,9 @@ function searchBuilding(){
                     marker.setVisible(false);
                 }
             });
+        }
+        function setActiveButton(activeButtonSelector){
+            $('.btn'). removeClass('btn-active');
+
+            $(activeButtonSelector).addClass('btn-active');
         }

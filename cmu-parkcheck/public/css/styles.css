@@ -40,6 +40,21 @@ body, html {
 .navbar a:hover {
     font-weight: bold;
 }
+@keyframes blink{
+    0% {opacity: 1;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
+@keyframes fadeOut{
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+}
+.blink{
+    animation: blink 0.5s linear;
+}
+.faedOut{
+    animation: fadeOut 1s linear;
+}
 
 /* Mobile Adjustments */
 @media (max-width: 811px) {
@@ -164,6 +179,13 @@ body, html {
 .btn:hover {
     background-color: #872698;
     color: white;
+}
+.btn-active{
+    color: white;
+    background-color: #872698;
+    border: #52105e;
+    box-shadow: #52105e;
+
 }
 
 @media (max-width: 320px) {

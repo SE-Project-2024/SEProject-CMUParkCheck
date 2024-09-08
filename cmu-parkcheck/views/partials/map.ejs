@@ -1,4 +1,8 @@
 <style>
+    .info-window{
+        padding: 10px;
+        max-width: 300px;
+    }
     .info-window-link{
         color:blue;
         text-decoration: underline;
@@ -183,5 +187,8 @@
         document.getElementById('message').style.display = 'block';
         history.replaceState(null, '', window.location.pathname);
     }
+    document.getElementById('message-close').addEventListener('click', function(){
+        document.getElementById('message').style.display = 'none';
+    });
 </script>
 <script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyARbNYm3tKrpe52ERJZbUhHhVkrUxJrKZE&libraries=geometry&callback=initMap" async defer></script>

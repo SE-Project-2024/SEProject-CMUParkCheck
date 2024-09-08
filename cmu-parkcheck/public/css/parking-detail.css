@@ -59,8 +59,7 @@
     padding: 0;
     text-align: center;
     padding-top: 2%;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);}
 #timestamp{
     size: 10px;
     position: absolute;
@@ -202,8 +201,8 @@
     z-index: 1000;
 }
 .overlay-content{
-    width: 20%;
-    height: 20%;
+    width: 50%;
+    height: 15%;
     background-color: white;
     padding: 2%;
     display: flex;
@@ -216,7 +215,7 @@
 
 .overlay-content p{
     margin: 0 0 15px;
-    font-size: 2vw;
+    font-size: 5vw;
     text-align: center;
 }
 

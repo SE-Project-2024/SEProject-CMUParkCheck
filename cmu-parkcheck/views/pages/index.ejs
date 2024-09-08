@@ -1,6 +1,7 @@
 <%- include("../partials/header") %>
-<div id="message" style="display: none; position: fixed; top: 165px; left: 30%; transform: translateX(-50%); background-color: lightgreen; padding: 10px; border: 1px solid green; border-radius: 5px; z-index: 1000;">
-    Your vehicle parking location has been saved!
+<div id="message" style="display: none; position: fixed; top: 240px; left: 50%; width: 90%; transform: translateX(-50%); background-color: lightgreen; padding-left: 2px; padding-right: 2px;border: 1px solid green; border-radius: 5px; z-index: 1000;">
+    <span id="message-close" style="float: right; cursor: pointer; font-size: 16px; font-weight: bold;">&times;</span>
+    <p>Your vehicle parking location has been saved!</p>
 </div>
 <div id="map-container">
     <%- include("../partials/map") %>
