@@ -22,24 +22,25 @@ $(document).ready(async function() {
     function getTimePeriods(timestamp){
         const date = new Date(timestamp);
         const hours = date.getHours();
-        if (hours >= 7 && hours < 10) return '07:00-10:00';
-        if (hours >= 10 && hours < 12) return '10:00-12:00';
-        if (hours >= 12 && hours < 14) return '12:00-14:00';
-        if (hours >= 14 && hours < 16) return '14:00-16:00';
-        if (hours >= 16 && hours < 18) return '16:00-18:00';
+        console.log('Timestamp: ', timestamp, 'Hours: ', hours)
+        if (hours >= 7 && hours < 10) return '07:00 to 10:00';
+        if (hours >= 10 && hours < 12) return '10:01 to 12:00';
+        if (hours >= 12 && hours < 14) return '12:01 to 14:00';
+        if (hours >= 14 && hours < 16) return '14:01 to 16:00';
+        if (hours >= 16 && hours < 18) return '16:01 to 18:00';
         return 'Beyond 18:00';
     }
 
     function updateTimePeriodIcons() {
         const periods = {
-            '07:00-10:00': { likes: 0, dislikes: 0 },
-            '10:00-12:00': { likes: 0, dislikes: 0 },
-            '12:00-14:00': { likes: 0, dislikes: 0 },
-            '14:00-16:00': { likes: 0, dislikes: 0 },
-            '16:00-18:00': { likes: 0, dislikes: 0 },
+            '07:00 to 10:00': { likes: 0, dislikes: 0 },
+            '10:01 to 12:00': { likes: 0, dislikes: 0 },
+            '12:01 to 14:00': { likes: 0, dislikes: 0 },
+            '14:01 to 16:00': { likes: 0, dislikes: 0 },
+            '16:01 to 18:00': { likes: 0, dislikes: 0 },
             'Beyond 18:00': { likes: 0, dislikes: 0 }
         };
-        
+    
         (feedbacks[parkingId] || []).forEach(feedback => {
             const period = getTimePeriods(feedback.timestamp);
             if (period in periods) {
@@ -50,22 +51,28 @@ $(document).ready(async function() {
                 }
             }
         });
-
+    
         $('.time-period').each(function() {
             const period = $(this).find('h3').text().trim();
             const { likes, dislikes } = periods[period] || { likes: 0, dislikes: 0 };
-            const periodLikePercentage = (likes / (likes + dislikes)) * 100 || 0;
-            const periodDislikePercentage = (dislikes / (likes + dislikes)) * 100 || 0;
-
-            if (periodLikePercentage > periodDislikePercentage) {
+    
+            if (likes === 0 && dislikes === 0) {
+                // No feedback, show green
                 $(this).find('.green-car').show();
                 $(this).find('.red-car').hide();
                 $(this).find('.yellow-car').hide();
-            } else if (periodDislikePercentage > periodLikePercentage) {
+            } else if (likes > dislikes) {
+                // More likes than dislikes, show green
+                $(this).find('.green-car').show();
+                $(this).find('.red-car').hide();
+                $(this).find('.yellow-car').hide();
+            } else if (dislikes > likes) {
+                // More dislikes than likes, show red
                 $(this).find('.green-car').hide();
                 $(this).find('.red-car').show();
                 $(this).find('.yellow-car').hide();
             } else {
+                // Likes and dislikes are equal, show yellow
                 $(this).find('.green-car').hide();
                 $(this).find('.red-car').hide();
                 $(this).find('.yellow-car').show();
@@ -158,7 +165,7 @@ $(document).ready(async function() {
         localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
     }
 
-    $('.like-icon').click(async function() {
+    $('.like-icon').off('click').on('click', async function() {
         likeCount++;
         try {
             const payload = { parkingAreaId: parkingId, positiveFeedback: true };
@@ -170,12 +177,12 @@ $(document).ready(async function() {
                 body: JSON.stringify(payload)
             });
             const result = await request.json();
-            console.log(result);
+            console.log('Thumbs up positive feedback result:', result);
             latestTimestamp = result.timestamp;
             const feedback = { timestamp: latestTimestamp, type: 'like', color: 'green', text: 'THUMBS UP' };
             saveFeedbackToLocalStorage(feedback);
         } catch (e) {
-            console.log(e);
+            console.log('Error during thumbs up feedback:', e);
             alert("Error", e);
         }
         $(this).addClass('active-like');
@@ -280,5 +287,5 @@ $(document).ready(async function() {
     });
 
     updateMeter();
-    updateTimestampUI(latestTimestamp, { text: 'No feedback yet.', color: 'black' });
+    updateTimestampUI(latestTimestamp);
 });
