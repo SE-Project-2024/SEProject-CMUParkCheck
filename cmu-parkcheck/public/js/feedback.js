@@ -224,12 +224,13 @@ $(document).ready(async function() {
     $("#toggleTime").click(function() {
         $(".time").slideToggle("slow", function() {
             if ($(this).is(":visible")) {
+                    var scrollPosition = $(".time").offset().top + $(".time").outerHeight()-$(window).height() + 20;
                 $('html, body').animate({
-                    scrollTop: $(".time").offset().top
-                }, 800); 
-            }
-        });
+                    scrollTop: scrollPosition
+                },800);
+        }
     });
+});
     
     $('#alternative-prompt .yes').click(function() {
         $('#alternative-prompt').hide();
@@ -283,6 +284,16 @@ $(document).ready(async function() {
 
     $('#location-prompt .no').click(function(){
         cancelSave();
+    });
+    $('.alternative-box .close-button').click(function() {
+        $('.alternative-box').slideUp('slow');
+    });
+    $('.overlay-content .close-button').click(function() {
+        $('.overlay-content').slideUp('slow');
+
+    });
+    $('.alternative-overlay-content .close-button').click(function(){
+        $('.alternative-overlay-content').slideUp('slow');
     });
 
     updateMeter();
