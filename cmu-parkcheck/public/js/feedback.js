@@ -13,7 +13,6 @@ $(document).ready(async function() {
 
     const savedFeedback = localStorage.getItem('feedbacks');
     let feedbacks = savedFeedback ? JSON.parse(savedFeedback) : {};
-
     // Ensure there's a structure for the current parking area
     if (!feedbacks[parkingId]) {
         feedbacks[parkingId] = [];
