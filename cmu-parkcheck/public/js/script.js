@@ -58,6 +58,16 @@ function searchBuilding(){
                 buildingCircle.setMap(null);
             }
 
+            const infoWindowContent = `                <div class="info-window">
+            <h3>${building.name}</h3>
+            <p>${building.latitude} , ${building.longitude}</p>
+            </div>
+        `;
+        
+            const infoWindow = new google.maps.InfoWindow({
+                content: infoWindowContent
+            });
+
             buildingMarker = new google.maps.Marker({
                 position: { lat: parseFloat(building.latitude), lng: parseFloat(building.longitude) },
                 map: map,
@@ -67,9 +77,11 @@ function searchBuilding(){
                     scaledSize: new google.maps.Size(75, 75)
                 }
             });
-            // buildingMarker.addListener('click', () => {
-            //     console.log(`Clicked on marker: ${building.name}`);
-            // });
+            buildingMarker.addListener('click', () => {
+                console.log(`Clicked on marker: ${building.name}`);
+                infoWindow.setContent(infoWindowContent);
+                infoWindow.open(map, buildingMarker);
+            });
             buildingCircle = new google.maps.Circle({
                 strokeColor: '#C9B2CE',
                 strokeOpacity: 0.20,
