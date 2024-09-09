@@ -13,7 +13,8 @@ $(document).ready(async function() {
 
     const savedFeedback = localStorage.getItem('feedbacks');
     let feedbacks = savedFeedback ? JSON.parse(savedFeedback) : {};
-
+    updateMeter();
+    updateTimestampUI(latestTimestamp);
     // Ensure there's a structure for the current parking area
     if (!feedbacks[parkingId]) {
         feedbacks[parkingId] = [];
@@ -25,7 +26,7 @@ $(document).ready(async function() {
         console.log('Timestamp: ', timestamp, 'Hours: ', hours)
         if (hours >= 7 && hours < 10) return '07:00 to 10:00';
         if (hours >= 10 && hours < 12) return '10:01 to 12:00';
-        if (hours >= 12 && hours < 14) return '12:01 to 14:00';
+        if (hours >= 12 && hours < 14) return '12.01 to 14.00';
         if (hours >= 14 && hours < 16) return '14:01 to 16:00';
         if (hours >= 16 && hours < 18) return '16:01 to 18:00';
         return 'Beyond 18:00';
