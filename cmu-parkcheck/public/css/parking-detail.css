@@ -44,9 +44,9 @@
     font-size:x-large;
     position: absolute;
     top: 48%;
-    left: 12%;
-    text-align: center;
-    align-items: center;
+    left: 5%;
+    text-align: left;
+    align-items: left;
 }
 .info-feedback h2{
     font-size: xx-large;
@@ -65,7 +65,7 @@
     size: 10px;
     position: absolute;
     top: 30%;
-    font-size:17px;
+    font-size:15px;
 }
 .gmaps_link{
     position: absolute;
