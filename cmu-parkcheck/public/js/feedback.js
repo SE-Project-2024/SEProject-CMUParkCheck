@@ -234,53 +234,44 @@ $(document).ready(async function() {
     });
 });
     
-    $('#alternative-prompt .yes').off('click').on('click', async function() {
+    $('#alternative-prompt .yes').click(function() {
         $('#alternative-prompt').hide();
         $('.alternative-box').slideDown('slow', function() {
             $('html, body').animate({
                 scrollTop: $('.alternative-box').offset().top
             }, 800);
         });
-
         navigator.geolocation.getCurrentPosition(async function(position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
 
             try {
-                const response = await fetch(`/api/nearby-parking?latitude=${latitude}&longitude=${longitude}&_=${new Date().getTime()}`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+                const response = await fetch(`/api/nearby-parking?latitude=${latitude}&longitude=${longitude}`);
                 const nearbyParking = await response.json();
 
-                console.log('Raw API Response:', nearbyParking);
+                const uniqueParking = Array.from(new Map(nearbyParking.map(item => [item.id, item])).values());
 
                 const parkingList = $('#parking-list');
-                parkingList.empty(); // Clear old items
+                parkingList.empty();
 
-                // Use a Set to ensure uniqueness
-                const parkingSet = new Set();
-                nearbyParking.forEach(parking => {
-                    if (!parkingSet.has(parking.id)) {
-                        parkingSet.add(parking.id);
+                if (uniqueParking.length > 0) {
+                    uniqueParking.forEach(parking => {
                         parkingList.append(`
                             <div class="parking-item">
-                                <p><a href="/parking-details/${parking.id}">${parking.name}</a></p>
-                                <p>${parking.distance.toFixed(2)} km away</p>
+                            <p><a href="/parking-details/${parking.id}">${parking.name}</a></p>
+                            <p>${parking.distance.toFixed(2)} km away</p>
                             </div>
                         `);
-                    }
-                });
-
-                if (parkingSet.size === 0) {
-                    parkingList.append('<p>No nearby parking areas found.</p>');
+                    });
+                } else {
+                    $('.alternative-box').append('<p>No nearby parking areas found.</p>');
                 }
             } catch (error) {
                 console.error('Error fetching nearby parking areas: ', error);
                 $('.alternative-box').append('<p>Failed to load nearby parking areas.</p>');
             }
         }, function(error) {
-            console.error("Error getting location: ", error);
+            console.error("Error getting locations: ", error);
             $('.alternative-box').append('<p>Failed to get location</p>');
         });
     });
