@@ -65,7 +65,7 @@
     size: 10px;
     position: absolute;
     top: 30%;
-    font-size: small;
+    font-size:larger;
 }
 .gmaps_link{
     position: absolute;
@@ -122,8 +122,8 @@
 .parking-situation-meter {
     position: absolute;
     top: 37%;
-    right: 5%;
-    width: 90vw;
+    right: 2%;
+    width: 100vw;
     height: 45px;
     background-color: whitesmoke;
     display: flex;
