@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Jireh410.",
+    password: "Kard_1539",
     database: "cmu_parkcheck"
 });
 
@@ -31,6 +31,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     res.render('pages/index');
+});
+
+app.get('/complaints', function(req, res) {
+    res.render('pages/complaints');
 });
 
 app.get('/api/feedback/:parkingAreaId', (req, res) => {

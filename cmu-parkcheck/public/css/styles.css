@@ -195,3 +195,61 @@ body, html {
     }
 }
 
+/* complaints */
+.parking-complaint-text{
+    margin-top: 25px;
+    text-align: center;
+    .parking-complaint{
+        font-size: large;
+        font-weight:800 ;
+        margin-bottom: 10px;
+    }
+}
+.location{
+    margin-top: 10px;
+    margin-left: 10px;
+    .location-text{
+        font-size: large;
+        
+    }
+}
+.issue{
+    margin-top: 10px;
+    margin-left: 10px;
+    .issue-text{
+        font-size: large;
+        margin-bottom: 10px;
+    }
+    textarea {
+        width: 97%;
+        height: 125px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        resize: none;
+      }
+}
+.media-proof{
+    margin-top: 10px;
+    margin-left: 10px;
+    .media-proof-text{
+        font-size: large;
+    }
+}
+.file{
+    margin-left: 10px;
+    width: 100px; 
+    height: 100px;
+}
+.submit{
+    margin-top: 50px;
+    background-color:#872698 ;
+    color: white;
+    margin-right: 10px ;
+    padding: 10px 20px;
+    border-radius: 4px;
+    float: right ;
+}

@@ -1,0 +1,29 @@
+<%- include("../partials/header") %>
+<div class="parking-complaint-text">
+    <div class="parking-complaint">PARKING COMPLAINTS</div>
+    <div class="complaint-text">This form is to address concerns regarding parking situations, experiences, and facilities at Chiang Mai University.</div>
+</div>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <div class="location">
+        <div class="location-text">LOCATION:</div>
+        <!-- <input type="text" id="location" name="location" placeholder="Enter location" required> -->
+    </div>
+
+    <div class="issue">
+        <div class="issue-text">ISSUE/CONCERNS:</div>
+        <div class="input-issue-box">
+            <textarea id="issue" name="issue" placeholder="Write something.." required></textarea>
+        </div>
+    </div>
+
+    <div class="media-proof">
+        <div class="media-proof-text">MEDIA PROOF:</div>
+    </div>
+    
+    <input type="file" id="myFile" name="filename" style="display: none;" />
+    <label for="myFile">
+        <img src="/img/add-file.png" alt="Upload Image" class="file" />
+    </label>
+    
+    <button type="submit" class="submit">Publish Complaint</button>
+</form>
