@@ -19,11 +19,70 @@
     <div class="media-proof">
         <div class="media-proof-text">MEDIA PROOF:</div>
     </div>
+    <div class="file-upload-container">
+        <label for="myFile">
+            <img src="/img/add-file.png" alt="Upload Image" class="file" />
+        </label>
+        <input type="file" id="myFile" name="filename[]" style="display: none;" multiple onchange="previewFiles()" />
+        <div class="img" id="previewContainer"></div>
+    </div>     
     
-    <input type="file" id="myFile" name="filename" style="display: none;" />
-    <label for="myFile">
-        <img src="/img/add-file.png" alt="Upload Image" class="file" />
-    </label>
+    <div class="img" id="previewContainer" style="display: none;">
+        <span class="delete" onclick="removeFile()">&times;</span>
+        <img id="previewImg" />
+        <p id="fileName"></p>
+    </div>
     
     <button type="submit" class="submit">Publish Complaint</button>
 </form>
+
+<script>
+    let selectedFiles = [];
+    
+    function previewFiles() {
+        const fileInput = document.getElementById("myFile");
+        const files = Array.from(fileInput.files);
+        const previewContainer = document.getElementById("previewContainer");
+    
+        selectedFiles = [...files]; 
+    
+        previewContainer.innerHTML = ""; 
+    
+        selectedFiles.forEach((file, index) => {
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+    
+                reader.onload = function(e) {
+                    const imgContainer = document.createElement("div");
+                    imgContainer.classList.add("img");
+                    
+                    const img = document.createElement("img");
+                    img.src = e.target.result;
+    
+                    const deleteBtn = document.createElement("span");
+                    deleteBtn.classList.add("delete");
+                    deleteBtn.innerHTML = "&times;";
+                    deleteBtn.onclick = function() {
+                        removeFile(index); 
+                    };
+    
+                    imgContainer.appendChild(img);
+                    imgContainer.appendChild(deleteBtn);
+                    previewContainer.appendChild(imgContainer);
+                };
+    
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    function removeFile(index) {
+        selectedFiles.splice(index, 1); 
+        const fileInput = document.getElementById("myFile");
+        const dt = new DataTransfer();
+        selectedFiles.forEach(file => dt.items.add(file)); 
+        fileInput.files = dt.files;
+        previewFiles();
+    }
+    </script>
+    
