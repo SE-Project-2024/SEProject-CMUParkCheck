@@ -37,44 +37,54 @@
 </form>
 
 <script>
-    let selectedFiles = [];
-    
     function previewFiles() {
-        const fileInput = document.getElementById("myFile");
-        const files = Array.from(fileInput.files);
-        const previewContainer = document.getElementById("previewContainer");
-    
-        selectedFiles = [...files]; 
-    
-        previewContainer.innerHTML = ""; 
-    
-        selectedFiles.forEach((file, index) => {
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-    
-                reader.onload = function(e) {
-                    const imgContainer = document.createElement("div");
-                    imgContainer.classList.add("img");
-                    
-                    const img = document.createElement("img");
-                    img.src = e.target.result;
-    
-                    const deleteBtn = document.createElement("span");
-                    deleteBtn.classList.add("delete");
-                    deleteBtn.innerHTML = "&times;";
-                    deleteBtn.onclick = function() {
-                        removeFile(index); 
-                    };
-    
-                    imgContainer.appendChild(img);
-                    imgContainer.appendChild(deleteBtn);
-                    previewContainer.appendChild(imgContainer);
-                };
-    
-                reader.readAsDataURL(file);
-            }
-        });
-    }
+    const fileInput = document.getElementById("myFile");
+    const files = Array.from(fileInput.files);
+    const previewContainer = document.getElementById("previewContainer");
+
+    selectedFiles = [...files];
+
+    previewContainer.innerHTML = "";
+
+    selectedFiles.forEach((file, index) => {
+        const fileContainer = document.createElement("div");
+        fileContainer.classList.add(file.type.startsWith('image/') ? "img" : "file-container");
+
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                fileContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // ถ้าไม่ใช่รูป ให้แสดงไอคอนและชื่อไฟล์
+            const fileIcon = document.createElement("div");
+            fileIcon.classList.add("file-icon");
+            fileIcon.innerHTML = "&#128196;"; // File icon
+
+            const fileName = document.createElement("div");
+            fileName.classList.add("file-name");
+            fileName.textContent = file.name;
+
+            fileContainer.appendChild(fileIcon);
+            fileContainer.appendChild(fileName);
+        }
+
+        const deleteBtn = document.createElement("span");
+        deleteBtn.classList.add("delete");
+        deleteBtn.innerHTML = "&times;";
+        deleteBtn.onclick = function () {
+            removeFile(index);
+        };
+
+        fileContainer.appendChild(deleteBtn);
+        previewContainer.appendChild(fileContainer);
+    });
+}
+
+
 
     function removeFile(index) {
         selectedFiles.splice(index, 1); 

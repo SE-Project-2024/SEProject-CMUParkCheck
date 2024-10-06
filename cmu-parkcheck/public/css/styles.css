@@ -259,7 +259,7 @@ body, html {
     z-index: 1000; 
 }
 #previewImg {
-    width: 50px; 
+    width: 40px; 
     height: auto; 
     border: 1px solid #ccc;
 }
@@ -286,12 +286,44 @@ body, html {
 
 .delete {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 2px;
+    right: 2px;
+    font-size: 14px; 
     cursor: pointer;
-    font-size: 20px;
     color: red;
-    background-color: white;
-    border-radius: 50%;
-    padding: 2px 5px;
+    background-color: #f8f8f8;
+    border-radius: 50%; 
+    padding: 1px; 
+    border: 1px solid #f8f8f8; 
+    width: 10px; 
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
+.file-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    max-width: 300px;
+    position: relative;
+}
+
+.file-container .file-icon {
+    font-size: 30px;
+    color: #872698;
+    margin-right: 10px;
+}
+
+.file-container .file-name {
+    font-size: 14px;
+    color: #333;
+    word-break: break-all; 
+}
+
+
