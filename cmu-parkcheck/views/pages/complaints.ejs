@@ -9,41 +9,11 @@
             <label for="parkingSelect">Select Parking Area:</label>
             <select id="parkingSelect" name="parkingArea">
                 <option value="" disabled selected>Select a parking area</option>
-                <option value="camt_parking_1">CAMT Parking 1</option>
-                <option value="camt_parking_2">CAMT Parking 2</option>
-                <option value="camt_parking_3">CAMT Parking 3</option>
-                <option value="camt_parking_4">CAMT Parking 4</option>
-                <option value="female_dormitory_3_parking_1">Female Dormitory 3 Parking 1</option>
-                <option value="rb5_parking_1">RB5 Parking 1</option>
-                <option value="rb5_parking_2">RB5 Parking 2</option>
-                <option value="central_station_parking_1">Central Station Parking 1</option>
-                <option value="central_station_parking_2">Central Station Parking 2</option>
-                <option value="cmu_library_parking_1">CMU Library Parking 1</option>
-                <option value="cmu_coop_store_parking_1">CMU Cooperative Store Parking 1</option>
-                <option value="cmu_coop_store_parking_2">CMU Cooperative Store Parking 2</option>
-                <option value="human_parking_1">Human Parking 1</option>
-                <option value="social_parking_1">Social Parking 1</option>
-                <option value="angkaew_parking_2">Angkaew Parking 2</option>
-                <option value="angkaew_parking_1">Angkaew Parking 1</option>
-                <option value="itsc_parking_1">ITSC Parking 1</option>
-                <option value="comp_sci_parking_1">Computer Science Parking 1</option>
-                <option value="ang_tat_chomphu_parking_1">Ang Tat Chomphu Parking 1</option>
-                <option value="ang_tat_chomphu_parking_2">Ang Tat Chomphu Parking 2</option>
-                <option value="angkaew_parking_3">Angkaew Parking 3</option>
-                <option value="itsc_parking_2">ITSC Parking 2</option>
-                <option value="masscomm_parking_1">MassComm Parking 1</option>
-                <option value="masscomm_parking_3">MassComm Parking 3</option>
-                <option value="masscomm_parking_4">MassComm Parking 4</option>
-                <option value="masscomm_parking_2">MassComm Parking 2</option>
-                <option value="tlic_parking_1">TLIC Parking 1</option>
-                <option value="male_dormitory_5_parking_1">Male Dormitory 5 Parking 1</option>
-                <option value="male_dormitory_4_parking_1">Male Dormitory 4 Parking 1</option>
-                <option value="male_dormitory_6_parking_1">Male Dormitory 6 Parking 1</option>
-                <option value="male_dormitory_6_parking_2">Male Dormitory 6 Parking 2</option>
-                <option value="male_dormitory_4_parking_2">Male Dormitory 4 Parking 2</option>
-                <option value="male_dormitory_7_parking_1">Male Dormitory 7 Parking 1</option>
+                <% parkingAreas.forEach(function(area) { %>
+                    <option value="<%= area.name %>"><%= area.name %></option>
+                <% }) %>
             </select>
-        </div>  
+            </div>  
     </div>
 
     <div class="issue">
@@ -64,91 +34,100 @@
         <div class="img" id="previewContainer"></div>
     </div>     
     
-    <div class="img" id="previewContainer" style="display: none;">
+    <!-- <div class="img" id="previewContainer" style="display: none;">
         <span class="delete" onclick="removeFile()">&times;</span>
         <img id="previewImg" />
         <p id="fileName"></p>
-    </div>
+    </div> -->
     
     <button type="submit" class="submit "id="submitBtn">Publish Complaint</button>
 </form>
 
-<script src="/cmu-parkcheck/public/js/firebase.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-storage.js"></script>
-
-
 <script>
+        let selectedFiles = [];
 
-    window.onload = function(){
-        document.querySelector("form").reset();
-        document.getElementById("previewContainer").innerHTML = "" ;
-        selectedFiles=[];
-    }
-
-    function previewFiles() {
-    const fileInput = document.getElementById("myFile");
-    const files = Array.from(fileInput.files);
-    const previewContainer = document.getElementById("previewContainer");
-
-    selectedFiles = [...files];
-
-    previewContainer.innerHTML = "";
-
-    selectedFiles.forEach((file, index) => {
-        const fileContainer = document.createElement("div");
-        fileContainer.classList.add(file.type.startsWith('image/') ? "img" : "file-container");
-
-        if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.createElement("img");
-                img.src = e.target.result;
-                fileContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            const fileIcon = document.createElement("div");
-            fileIcon.classList.add("file-icon");
-            fileIcon.innerHTML = "&#128196;"; 
-
-            const fileName = document.createElement("div");
-            fileName.classList.add("file-name");
-            fileName.textContent = file.name;
-
-            fileContainer.appendChild(fileIcon);
-            fileContainer.appendChild(fileName);
-        }
-
-        const deleteBtn = document.createElement("span");
-        deleteBtn.classList.add("delete");
-        deleteBtn.innerHTML = "&times;";
-        deleteBtn.onclick = function () {
-            removeFile(index);
+        window.onload = function() {
+            document.querySelector("form").reset();
+            document.getElementById("previewContainer").innerHTML = "";
         };
 
-        fileContainer.appendChild(deleteBtn);
-        previewContainer.appendChild(fileContainer);
-    });
-}
+        function previewFiles() {
+            const fileInput = document.getElementById("myFile");
+            const files = Array.from(fileInput.files);
+            const previewContainer = document.getElementById("previewContainer");
 
-    function removeFile(index) {
-        selectedFiles.splice(index, 1); 
-        const fileInput = document.getElementById("myFile");
-        const dt = new DataTransfer();
-        selectedFiles.forEach(file => dt.items.add(file)); 
-        fileInput.files = dt.files;
-        previewFiles();
-    }
+            selectedFiles = [...files];
+            previewContainer.innerHTML = "";
 
-    document.querySelector("form").onsubmit = function(event){
-        event.preventDefault();
-        this.reset();
-        document.getElementById("previewContainer").innerHTML = "";
-        selectedFiles = [];
-    }
-    
-    </script>
-    
+            selectedFiles.forEach((file, index) => {
+                const fileContainer = document.createElement("div");
+                fileContainer.classList.add(file.type.startsWith('image/') ? "img" : "file-container");
+
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement("img");
+                        img.src = e.target.result;
+                        fileContainer.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    const fileIcon = document.createElement("div");
+                    fileIcon.classList.add("file-icon");
+                    fileIcon.innerHTML = "&#128196;"; 
+
+                    const fileName = document.createElement("div");
+                    fileName.classList.add("file-name");
+                    fileName.textContent = file.name;
+
+                    fileContainer.appendChild(fileIcon);
+                    fileContainer.appendChild(fileName);
+                }
+
+                const deleteBtn = document.createElement("span");
+                deleteBtn.classList.add("delete");
+                deleteBtn.innerHTML = "&times;";
+                deleteBtn.onclick = function() {
+                    removeFile(index);
+                };
+
+                fileContainer.appendChild(deleteBtn);
+                previewContainer.appendChild(fileContainer);
+            });
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1); 
+            const fileInput = document.getElementById("myFile");
+            const dt = new DataTransfer();
+            selectedFiles.forEach(file => dt.items.add(file)); 
+            fileInput.files = dt.files;
+            previewFiles();
+        }
+
+        document.querySelector("#complaintForm").onsubmit = function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this); // Create FormData from the form
+            selectedFiles.forEach(file => {
+                formData.append('myFile', file); // Append files to FormData
+            });
+
+            fetch('/submit-complaint', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle success or error response
+                console.log(data);
+                // Optionally reset the form or show a success message
+                this.reset();
+                document.getElementById("previewContainer").innerHTML = "";
+                selectedFiles = [];
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        };
+    </script>    

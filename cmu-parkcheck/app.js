@@ -3,6 +3,7 @@ const app = express();
 const ejs = require("ejs");
 const path = require("path");
 const mysql = require("mysql2");
+const multer = require ("multer");
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -20,6 +21,16 @@ connection.connect((err) => {
     console.log("Connected to MySQL database");
 });
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now()+'-' + file.originalname);
+    }
+});
+const upload = multer({ dest: 'uploads/'});
+
 app.set('view engine', 'ejs');
 
 app.set('views', path.join(__dirname, 'views'));
@@ -33,42 +44,51 @@ app.get('/', (req, res) => {
     res.render('pages/index');
 });
 
-app.get('/complaints', function(req, res) {
-    res.render('pages/complaints');
-});
-
-app.get('/complaints-dashboard', function(req, res) {
+app.get('/complaints', (req, res) => {
+    const query = 'SELECT name FROM parking_areas';
+    
+    connection.query(query, (err, results) => {
+      if (err) {
+        console.error('Error fetching parking areas:', err);
+        return res.status(500).send('Server Error');
+      }
+      
+      // Render complaints form and pass the parking areas to the view
+      res.render('pages/complaints', { parkingAreas: results });
+    });
+  });
+  app.get('/complaints-dashboard', function(req, res) {
     res.render('pages/complaints-dashboard');
 });
 
-app.get('/api/feedback/:parkingAreaId', (req, res) => {
+app.get('/api/feeconnectionack/:parkingAreaId', (req, res) => {
     const parkingAreaId = req.params.parkingAreaId;
     const query = `
-        SELECT positive_feedback, COUNT(*) AS count, MAX(visit_time) AS latest_feedback_time 
-        FROM feedback 
+        SELECT positive_feeconnectionack, COUNT(*) AS count, MAX(visit_time) AS latest_feeconnectionack_time 
+        FROM feeconnectionack 
         WHERE parking_area_id = ? 
-        GROUP BY positive_feedback
+        GROUP BY positive_feeconnectionack
     `;
     connection.query(query, [parkingAreaId], (error, results) => {
         if (error) throw error;
-        const feedback = { likes: 0, dislikes: 0 };
+        const feeconnectionack = { likes: 0, dislikes: 0 };
         results.forEach(row => {
-            if (row.positive_feedback) {
-                feedback.likes = row.count;
+            if (row.positive_feeconnectionack) {
+                feeconnectionack.likes = row.count;
             } else {
-                feedback.dislikes = row.count;
+                feeconnectionack.dislikes = row.count;
             }
         });
         if (results.length > 0) {
-            feedback.latestFeedbackTime = results[0].latest_feedback_time;
+            feeconnectionack.latestFeeconnectionackTime = results[0].latest_feeconnectionack_time;
         }
-        res.json(feedback);
+        res.json(feeconnectionack);
     });
 });
 
-app.post('/api/feedback', (req, res) => {
-    const { parkingAreaId, positiveFeedback } = req.body;
-    connection.query('INSERT INTO feedback (parking_area_id, visit_time, positive_feedback) VALUES (?, NOW(), ?)', [parkingAreaId, positiveFeedback], (error, results) => {
+app.post('/api/feeconnectionack', (req, res) => {
+    const { parkingAreaId, positiveFeeconnectionack } = req.body;
+    connection.query('INSERT INTO feeconnectionack (parking_area_id, visit_time, positive_feeconnectionack) VALUES (?, NOW(), ?)', [parkingAreaId, positiveFeeconnectionack], (error, results) => {
         console.log(req.body);
         if (error) throw error;
         res.status(201).json({ success: true, timestamp: new Date().toISOString() });
@@ -144,10 +164,10 @@ app.get('/api/buildings/:input', (req, res) => {
         res.json(building);
     });
 });
-app.post('/api/feedback', (req, res) => {
-    const { parking_area_id, visit_time, positive_feedback } = req.body;
-    const query = "INSERT INTO feedback (parking_area_id, visit_time, positive_feedback) VALUES (?, ?, ?)";
-    connection.query(query, [parking_area_id, visit_time, positive_feedback], (err, results) => {
+app.post('/api/feeconnectionack', (req, res) => {
+    const { parking_area_id, visit_time, positive_feeconnectionack } = req.body;
+    const query = "INSERT INTO feeconnectionack (parking_area_id, visit_time, positive_feeconnectionack) VALUES (?, ?, ?)";
+    connection.query(query, [parking_area_id, visit_time, positive_feeconnectionack], (err, results) => {
         if (err){
             console.error("Error executing query:", err);
             res.status(500).json({ error: "Internal Server Error" });
@@ -177,6 +197,41 @@ app.post('/api/save-parking-location', (req, res) => {
     .catch(err => res.status(500).json({error: 'Failed to save location'}));
 });
 
+app.post('/upload', upload.array('filename[]'), (req, res) => {
+    const parkingArea = req.body.parkingArea;
+    const issue = req.body.issue;
+    const files = req.files;
+
+    if(!parkingArea || !issue){
+        return res.status(400).send('Parking Area and issue are required.');
+    }
+    const query = `INSERT INTO complaints (parking_area, issue, created_at) VALUES (?, ?, NOW())`;
+    connection.query(query, [parkingArea, issue], (err, result) => {
+        if (err) {
+            console.error('Error inserting complaint: ', err);
+            return res.status(500).send('Failed to submit complaint');
+        }
+
+        const complaintId = result.insertId;
+
+        // If there are uploaded files, save them in the database
+        if (files && files.length > 0) {
+            const fileValues = files.map(file => [complaintId, file.filename]);
+
+            const fileQuery = `INSERT INTO complaint_files (complaint_id, filename) VALUES ?`;
+            connection.query(fileQuery, [fileValues], (err) => {
+                if (err) {
+                    console.error('Error saving file information: ', err);
+                    return res.status(500).send('Failed to upload files');
+                }
+
+                res.send('Complaint submitted successfully with files');
+            });
+        } else {
+            res.send('Complaint submitted successfully without files');
+        }
+    });
+});
 
 const PORT = 3000;
 app.listen(PORT, function () {
