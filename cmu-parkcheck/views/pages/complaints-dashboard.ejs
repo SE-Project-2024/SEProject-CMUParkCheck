@@ -1,0 +1,12 @@
+<%- include("../partials/header") %>
+<div class="parking-complaint-text">
+    <div class="parking-complaint">PARKING COMPLAINTS</div>
+</div>
+<div class="view-complaints-form">
+    <button type="button" class="complaints-form "id="complaintsBtn">Report a Parking Issue</button>
+</div>
+<script>
+    document.getElementById('complaintsBtn').addEventListener('click', function(){
+        window.location.href ='/complaints';
+    });
+</script>

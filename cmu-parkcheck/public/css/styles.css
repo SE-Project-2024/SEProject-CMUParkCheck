@@ -40,6 +40,23 @@ body, html {
     font-weight: bold;
 }
 
+.complaints-form{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: purple;
+    border: none;
+    color: white;
+    text-align: center;
+    border-radius: 50px;
+    position: sticky;
+    text-decoration: none;
+    float: right;
+    right: 2%;
+}
+.complaints-form:hover{
+    background-color: #52105e;
+}
+
 @keyframes blink {
     0% { opacity: 1; }
     50% { opacity: 0; }
