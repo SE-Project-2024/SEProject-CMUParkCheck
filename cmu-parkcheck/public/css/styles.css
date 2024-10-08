@@ -326,4 +326,8 @@ body, html {
     word-break: break-all; 
 }
 
-
+select {
+    width: 200px;
+    padding: 5px;
+    font-size: 16px;
+  }
