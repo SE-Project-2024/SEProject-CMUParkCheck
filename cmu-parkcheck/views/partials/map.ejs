@@ -92,7 +92,7 @@
             scaledSize: new google.maps.Size(50, 50)
         }
     });
-    const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+    const googleMapsLink = `https://www.google.com/maps?q=${encodeURIComponent(latitude)},${encodeURIComponent(longitude)}`;
     const infoWindowContent = `
         <div class="info-window">
             <h3>Your vehicle is parked here!</h3>

@@ -25,7 +25,6 @@ body, html {
     text-align: left;
     padding: 5px 0;
     display: flex;
-
 }
 
 .navbar a {
@@ -40,19 +39,23 @@ body, html {
 .navbar a:hover {
     font-weight: bold;
 }
-@keyframes blink{
-    0% {opacity: 1;}
-    50% {opacity: 0;}
-    100% {opacity: 1;}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
-@keyframes fadeOut{
-    0% {opacity: 1;}
-    100% {opacity: 0;}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
 }
-.blink{
+
+.blink {
     animation: blink 0.5s linear;
 }
-.faedOut{
+
+.fadeOut {
     animation: fadeOut 1s linear;
 }
 
@@ -66,6 +69,27 @@ body, html {
     
     .header .logo img {
         width: 80%; /* Scale logo on smaller screens */
+    }
+
+    .input-box {
+        width: 90%; /* Use percentage for width */
+        height: auto; /* Adjust height as needed */
+        position: absolute;
+        left: 5px;
+        top: 26%;
+        padding: 10px;
+        z-index: 500;
+        align-items: center;
+    }
+
+    .myclock {
+        font-size: 1rem; /* Adjust font size for smaller screens */
+
+    }
+
+    #map {
+        height: 65vh; /* Adjust height for mobile */
+        width: 100%;
     }
 }
 
@@ -103,8 +127,8 @@ body, html {
 /* Time */
 .myclock {
     position: fixed;
-    top: 135px;
-    right: 120px;
+    top: 125px;
+    right: 100px;
     padding: 10px 20px;
     border-radius: 10px;
     text-align: center;
@@ -127,34 +151,21 @@ body, html {
     z-index: 400;
 }
 
-@media (max-width: 811px) {
-    .input-box {
-        width: 90%; /* Use percentage for width */
-        height: auto; /* Adjust height as needed */
-        position: absolute;
-        left: 5px;
-        top: 26%;
-        padding: 10px;
-        z-index: 500;
-        align-items: center;
-    }
-    .input-box input {
-        width: 90%;
-        top: 0;
-    }
-
-    .input-box i {
-        font-size: 1.2rem; /* Adjust size for mobile */
-    }
-
+/* Desktop Adjustments */
+@media (min-width: 812px) {
     .myclock {
-        font-size: 1rem; /* Adjust font size for smaller screens */
-        align-items: center;
+        position: fixed;
+        top: 135px; /* Keep the same top position */
+        right: 50%; /* Center horizontally */
+        transform: translateX(50%); /* Adjust to truly center */
     }
 
-    #map {
-        height: 65vh; /* Adjust height for mobile */
-        width: 100%;
+    .input-box {
+        position: absolute;
+        top: calc(135px + 60px); /* Adjust this value to position under .myclock */
+        left: 50%; /* Center the input box */
+        transform: translateX(-50%); /* Adjust to truly center */
+        width: 90%; /* Adjust as needed */
     }
 }
 
@@ -180,18 +191,18 @@ body, html {
     background-color: #872698;
     color: white;
 }
-.btn-active{
+
+.btn-active {
     color: white;
     background-color: #872698;
     border: #52105e;
     box-shadow: #52105e;
-
 }
 
 @media (max-width: 320px) {
-    .body .myclock{
+    .myclock {
         position: fixed;
-        right: 160;
+        right: 160; /* Ensure mobile compatibility */
     }
 }
 
