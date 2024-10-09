@@ -41,8 +41,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
+    res.render('pages/landing');
+});
+
+app.get('/index', function(req, res) {
     res.render('pages/index');
 });
+
 
 app.get('/complaints-dashboard', function(req, res) {
     const query = 'SELECT * FROM complaints'; 
@@ -54,22 +59,23 @@ app.get('/complaints-dashboard', function(req, res) {
         res.render('pages/complaints-dashboard', { rows: results });
     });
 });
-
-// app.get('/complaints-dashboard', function(req, res) {
-//     const query = `
-//         SELECT complaints.*, complaint_files.filename 
-//         FROM complaints 
-//         LEFT JOIN complaint_files 
-//         ON complaints.id = complaint_files.complaint_id
-//     `;
-//     connection.query(query, (err, results) => {
-//         if (err) {
-//             console.error('Error fetching complaints and files:', err);
-//             return res.status(500).send('Server Error');
-//         }
-//         res.render('pages/complaints-dashboard', { rows: results });
-//     });
-// });
+// hi i'm file
+app.get('/complaints-dashboard', function(req, res) {
+    const query = `
+        SELECT complaints.*, complaint_files.filename 
+        FROM complaints 
+        LEFT JOIN complaint_files 
+        ON complaints.id = complaint_files.complaint_id
+    `;
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching complaints and files:', err);
+            return res.status(500).send('Server Error');
+        }
+        res.render('pages/complaints-dashboard', { rows: results });
+        console.log(results)
+    });
+});
 
 
 app.get('/complaints', (req, res) => {

@@ -1,0 +1,51 @@
+<%- include("../partials/header") %>
+<div class="landing">
+    <div class="user">
+        <button id="userBtn" class="landing-user">USER</button>
+    </div>
+    <div class="admin">
+        <div>ADMINISTRATOR</div>
+    </div>
+</div>
+
+<style>
+   .landing-user {
+    color: white;
+    background-color: #872698;
+    text-decoration: none;
+    border: none;  
+    padding: 10px 20px; 
+    border-radius: 4px;  
+    font-size: 18px; 
+}
+.landing {
+    margin-top: 175px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.user, .admin {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 50px;
+    width: 250px;  /* Fixed width for buttons */
+    background-color: #872698;
+    border-radius: 4px;
+    color: white;
+}
+
+.admin {
+    margin-top: 40px;  
+}
+
+</style>
+<script>
+      document.getElementById('userBtn').addEventListener('click', function() {
+        window.location.href = '/index'; 
+    });
+</script>
