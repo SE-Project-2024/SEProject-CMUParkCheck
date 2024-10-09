@@ -4,12 +4,21 @@
         <button id="userBtn" class="landing-user">USER</button>
     </div>
     <div class="admin">
-        <div>ADMINISTRATOR</div>
+        <button id="adminBtn" class="landing-admin">ADMINISTRATOR</button>
     </div>
 </div>
 
 <style>
    .landing-user {
+    color: white;
+    background-color: #872698;
+    text-decoration: none;
+    border: none;  
+    padding: 10px 20px; 
+    border-radius: 4px;  
+    font-size: 18px; 
+}
+.landing-admin {
     color: white;
     background-color: #872698;
     text-decoration: none;
@@ -26,17 +35,19 @@
     justify-content: center;
 }
 
-.user, .admin {
+.landing-user, .landing-admin {
+    font-size: 18px; 
     margin-top: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    padding: 10px ;
     height: 50px;
     width: 250px;  
     background-color: #872698;
     border-radius: 4px;
     color: white;
+    outline: none;
 }
 
 .admin {
@@ -45,7 +56,10 @@
 
 </style>
 <script>
-      document.getElementById('userBtn').addEventListener('click', function() {
+    document.getElementById('userBtn').addEventListener('click', function() {
         window.location.href = '/index'; 
     });
+    document.getElementById('adminBtn').addEventListener('click', function(){
+        window.location.href = '/manage-complaints'
+    })
 </script>

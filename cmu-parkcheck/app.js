@@ -48,6 +48,10 @@ app.get('/index', function(req, res) {
     res.render('pages/index');
 });
 
+app.get('/manage-complaints',function(req,res){
+    res.render('pages/manage-complaints')
+})
+
 
 app.get('/complaints-dashboard', function(req, res) {
     const query = 'SELECT * FROM complaints'; 
