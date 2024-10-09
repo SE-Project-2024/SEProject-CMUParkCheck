@@ -5,9 +5,17 @@
 <div class="view-complaints-form">
     <button type="button" class="complaints-form" id="complaintsBtn">Report a Parking Issue</button>
 </div>
+<div class="status-filter">
+    <select id="status-filter" name="status">
+        <option value="all">All</option>
+        <option value="resolved">Resolved</option>
+        <option value="pending">Pending</option>
+    </select>
+</div>
+
 <div class="container">
     <% rows.forEach(function(row) { %>
-        <div class="dashboard-row">
+        <div class="dashboard-row status-<%= row.status %>">
             <div class="dashboard-date"><%= new Date(row.created_at).toLocaleString() %></div>
             <div class="dashboard-location">Parking Location: <%= row.parking_area %></div>
             <div class="dashboard-issue">Issue: <%= row.issue %></div>
@@ -23,7 +31,6 @@
 </div>
 
 <style>
-
     .dashboard-row {
         background-color: #f8f8f8;
         margin: 70px auto -60px auto;
@@ -39,11 +46,36 @@
         font-size: 16px;
 
     }
+    .status-filter select {
+        margin-left: 10px;
+        background-color: #872698;  
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 100px;
+    }
+
 </style>
 
 <script>
-    document.getElementById('complaintsBtn').addEventListener('click', function(){
-        window.location.href = '/complaints';
+
+    document.getElementById('status-filter').addEventListener('change', function() {
+    const selectedStatus = this.value;
+    const complaintRows = document.querySelectorAll('.dashboard-row');
+
+    complaintRows.forEach(row => {
+        if (selectedStatus === 'all') {
+            row.style.display = 'block';
+        } else {
+            if (row.classList.contains('status-' + selectedStatus)) {
+                row.style.display = 'block';
+            } else {
+                row.style.display = 'none';
+            }
+        }
     });
+});
     
 </script>
