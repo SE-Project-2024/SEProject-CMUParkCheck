@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Jireh410.",
+    password: "Kard_1539",
     database: "cmu_parkcheck"
 });
 
@@ -43,6 +43,34 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     res.render('pages/index');
 });
+
+app.get('/complaints-dashboard', function(req, res) {
+    const query = 'SELECT * FROM complaints'; 
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching complaints:', err);
+            return res.status(500).send('Server Error');
+        }
+        res.render('pages/complaints-dashboard', { rows: results });
+    });
+});
+
+// app.get('/complaints-dashboard', function(req, res) {
+//     const query = `
+//         SELECT complaints.*, complaint_files.filename 
+//         FROM complaints 
+//         LEFT JOIN complaint_files 
+//         ON complaints.id = complaint_files.complaint_id
+//     `;
+//     connection.query(query, (err, results) => {
+//         if (err) {
+//             console.error('Error fetching complaints and files:', err);
+//             return res.status(500).send('Server Error');
+//         }
+//         res.render('pages/complaints-dashboard', { rows: results });
+//     });
+// });
+
 
 app.get('/complaints', (req, res) => {
     const query = 'SELECT name FROM parking_areas';

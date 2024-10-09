@@ -5,6 +5,42 @@
 <div class="view-complaints-form">
     <button type="button" class="complaints-form "id="complaintsBtn">Report a Parking Issue</button>
 </div>
+<div class="container">
+    <% rows.forEach(function(row) { %>
+        <div class="dashboard-row">
+            <div class="dashboard-date"><%= new Date(row.created_at).toLocaleString() %></div>
+            <div class="dashboard-location">Parking Location: <%= row.parking_area %></div>
+            <div class="dashboard-issue">Issue: <%= row.issue %></div>
+            <!-- <% if (row.filename) { %>
+                <div class="dashboard-image">
+                    <img src="<%= row.filename %>" alt="img" width="200">
+                </div>
+            <% } %>  -->
+            <div class="dashboard-status">Status: <%= row.status %></div>
+        </div>
+    <% }); %> 
+</div>
+
+
+<style>
+      
+    .container {
+        margin: 70px auto 0 auto ;
+        display: flex;
+        flex-direction: column; 
+        align-items: flex-start;
+        justify-content: center;
+        border-radius: 5px;
+        width: 80%;
+        height: auto;
+        padding: 12px ;
+        border: 2px solid #f8f8f8;
+        background-color: #f8f8f8;
+        font-size: 16px;
+    }
+
+</style>
+
 <script>
     document.getElementById('complaintsBtn').addEventListener('click', function(){
         window.location.href ='/complaints';
