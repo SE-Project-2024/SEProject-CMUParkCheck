@@ -60,7 +60,9 @@
 </style>
 
 <script>
-
+     document.getElementById('complaintsBtn').addEventListener('click', function(){
+        window.location.href ='/complaints';
+    });
     document.getElementById('status-filter').addEventListener('change', function() {
     const selectedStatus = this.value;
     const complaintRows = document.querySelectorAll('.dashboard-row');
