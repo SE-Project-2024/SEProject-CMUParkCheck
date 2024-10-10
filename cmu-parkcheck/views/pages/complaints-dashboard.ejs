@@ -17,7 +17,7 @@
 </div>
 <div class="container">
     <% rows.forEach(function(row) { %>
-        <div class="dashboard-row status-<%= row.status %>">
+        <div class="dashboard-row status-<%= row.status %>" data-ref-number="<%= row.ref_number %>">
             <div class="dashboard-date"><%= new Date(row.created_at).toLocaleString() %></div>
             <div class="dashboard-location">Parking Location: <%= row.parking_area %></div>
             <div class="dashboard-issue">Issue: <%= row.issue %></div>
@@ -74,24 +74,42 @@
 </style>
 
 <script>
-     document.getElementById('complaintsBtn').addEventListener('click', function(){
-        window.location.href ='/complaints';
-    });
-    document.getElementById('status-filter').addEventListener('change', function() {
+document.getElementById('complaintsBtn').addEventListener('click', function(){
+    window.location.href = '/complaints';
+});
+
+document.getElementById('status-filter').addEventListener('change', function() {
     const selectedStatus = this.value;
     const complaintRows = document.querySelectorAll('.dashboard-row');
 
-    complaintRows.forEach(rows => {
+    complaintRows.forEach(row => {
         if (selectedStatus === 'all') {
-            rows.style.display = 'block';
+            row.style.display = 'block';
         } else {
-            if (rows.classList.contains('status-' + selectedStatus)) {
-                rows.style.display = 'block';
+            if (row.classList.contains('status-' + selectedStatus)) {
+                row.style.display = 'block';
             } else {
-                rows.style.display = 'none';
+                row.style.display = 'none';
             }
         }
     });
+});
+
+// Listen for 'Enter' key in the search input
+document.querySelector('.track-num').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        const searchValue = this.value.trim().toLowerCase();
+        const complaintRows = document.querySelectorAll('.dashboard-row');
+
+        complaintRows.forEach(row => {
+            const refNumber = row.getAttribute('data-ref-number').trim().toLowerCase(); // Fixed attribute selector
+            if (refNumber.includes(searchValue)) {
+                row.style.display = 'block';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
 });
     
 </script>
