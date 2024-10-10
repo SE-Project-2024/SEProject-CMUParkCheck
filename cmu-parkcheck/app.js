@@ -52,6 +52,20 @@ app.get('/admin-manage-parking',function(req,res){
     res.render('pages/admin-manage-parking')
 });
 
+app.post('/admin/update-status/:id', (req, res) => {
+    const complaintId = req.params.id;
+    const newStatus = req.body.status;
+
+    const sql = 'UPDATE complaints SET status = ? WHERE id = ?';
+    connection.query(sql, [newStatus, complaintId], (err, result) => { // เปลี่ยน db เป็น connection
+        if (err) {
+            console.error(err);
+            return res.json({ success: false, message: 'Database error' });
+        }
+        res.json({ success: true, message: 'Status updated successfully' });
+    });
+});
+
 
 app.get('/complaints-dashboard', function(req, res) {
     const query = 'SELECT * FROM complaints'; 

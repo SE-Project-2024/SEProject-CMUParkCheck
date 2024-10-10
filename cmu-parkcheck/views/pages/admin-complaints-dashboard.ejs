@@ -25,7 +25,13 @@
                     <img src="/uploads/<%= row.filename %>" alt="Complaint Image" width="200">
                 </div>
             <% } %> 
-            <div class="dashboard-status">Status: <%= row.status %></div>
+            <div class="dashboard-status">
+                Status: 
+                <select class="status-selector" data-id="<%= row.id %>">
+                    <option value="resolved" <%= row.status === 'resolved' ? 'selected' : '' %>>Resolved</option>
+                    <option value="pending" <%= row.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                </select>
+            </div>          
         </div>
     <% }); %> 
 </div>
@@ -60,6 +66,35 @@
 </style>
 
 <script>
+    
+   document.querySelectorAll('.status-selector').forEach(selector => {
+    selector.addEventListener('change', function() {
+        const complaintId = this.getAttribute('data-id');
+        const newStatus = this.value;
+
+        fetch(`/admin/update-status/${complaintId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: newStatus }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Status updated successfully');
+            } else {
+                alert('Failed to update status');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while updating status');
+        });
+    });
+});
+
+
      document.getElementById('complaintsBtn').addEventListener('click', function(){
         window.location.href ='/complaints';
     });
