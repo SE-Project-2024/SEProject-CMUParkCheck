@@ -1,3 +1,4 @@
+console.log('Script loaded');
 $(document).ready(async function() {
     // Initialize like and dislike counts from local storage if available
     const idInput = document.querySelector('#parkingId');
@@ -141,7 +142,7 @@ $(document).ready(async function() {
                 $('#location-info').text(`Latitude: ${latitude}, Longitude: ${longitude}`);  
                 $('#location-prompt').hide();
                 localStorage.setItem('savedLocation', JSON.stringify({ latitude, longitude }));
-                window.location.href = '/?parkingSaved=true';
+                window.location.href = '/index/?parkingSaved=true';
             }, function(error){
                 console.error('Error getting location:', error);
                 alert('Failed to get location' + error.message);
@@ -155,7 +156,7 @@ $(document).ready(async function() {
 
     function cancelSave(){
         $('#location-prompt').hide(); 
-        window.location.href = '/';
+        window.location.href = '/index';
     }
 
     function saveFeedbackToLocalStorage(feedback){
@@ -277,7 +278,7 @@ $(document).ready(async function() {
     });
 
     $('#alternative-prompt .no').click(function() {
-        window.location.href = '/';
+        window.location.href = '/index';
     });
 
     $('#location-prompt .yes').click(function() {

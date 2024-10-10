@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Kard_1539",
+    password: "Jireh410.",
     database: "cmu_parkcheck"
 });
 
@@ -66,7 +66,7 @@ app.post('/admin/update-status/:id', (req, res) => {
     });
 });
 
-
+//1
 app.get('/complaints-dashboard', function(req, res) {
     const query = 'SELECT * FROM complaints'; 
     connection.query(query, (err, results) => {
@@ -77,7 +77,7 @@ app.get('/complaints-dashboard', function(req, res) {
         res.render('pages/complaints-dashboard', { rows: results });
     });
 });
-
+//1
 app.get('/admin-complaints-dashboard', function(req, res) {
     const query = 'SELECT * FROM complaints'; 
     connection.query(query, (err, results) => {
@@ -143,34 +143,34 @@ app.get('/complaints', (req, res) => {
     res.render('pages/complaints-dashboard');
 });
 
-app.get('/api/feeconnectionack/:parkingAreaId', (req, res) => {
+app.get('/api/feedback/:parkingAreaId', (req, res) => {
     const parkingAreaId = req.params.parkingAreaId;
     const query = `
-        SELECT positive_feeconnectionack, COUNT(*) AS count, MAX(visit_time) AS latest_feeconnectionack_time 
-        FROM feeconnectionack 
+        SELECT positive_feedback, COUNT(*) AS count, MAX(visit_time) AS latest_feedback_time 
+        FROM feedback
         WHERE parking_area_id = ? 
-        GROUP BY positive_feeconnectionack
+        GROUP BY positive_feedback
     `;
     connection.query(query, [parkingAreaId], (error, results) => {
         if (error) throw error;
-        const feeconnectionack = { likes: 0, dislikes: 0 };
+        const feedback = { likes: 0, dislikes: 0 };
         results.forEach(row => {
-            if (row.positive_feeconnectionack) {
-                feeconnectionack.likes = row.count;
+            if (row.positive_feedback) {
+                feedback.likes = row.count;
             } else {
-                feeconnectionack.dislikes = row.count;
+                feedback.dislikes = row.count;
             }
         });
         if (results.length > 0) {
-            feeconnectionack.latestFeeconnectionackTime = results[0].latest_feeconnectionack_time;
+            feedback.latestFeedbackTime = results[0].latest_feedback_time;
         }
-        res.json(feeconnectionack);
+        res.json(feedback);
     });
 });
 
-app.post('/api/feeconnectionack', (req, res) => {
-    const { parkingAreaId, positiveFeeconnectionack } = req.body;
-    connection.query('INSERT INTO feeconnectionack (parking_area_id, visit_time, positive_feeconnectionack) VALUES (?, NOW(), ?)', [parkingAreaId, positiveFeeconnectionack], (error, results) => {
+app.post('/api/feedback', (req, res) => {
+    const { parkingAreaId, positiveFeedback } = req.body;
+    connection.query('INSERT INTO feedback (parking_area_id, visit_time, positive_feedback) VALUES (?, NOW(), ?)', [parkingAreaId, positiveFeedback], (error, results) => {
         console.log(req.body);
         if (error) throw error;
         res.status(201).json({ success: true, timestamp: new Date().toISOString() });
