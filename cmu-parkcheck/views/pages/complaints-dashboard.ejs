@@ -16,6 +16,7 @@
     <input type="text" class="track-num" placeholder="Ref Number to Track Complaint Status">
 </div>
 <div class="container">
+    <% rows.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); %>
     <% rows.forEach(function(row) { %>
         <div class="dashboard-row status-<%= row.status %>" data-ref-number="<%= row.ref_number %>">
             <div class="dashboard-date"><%= new Date(row.created_at).toLocaleString() %></div>
@@ -67,6 +68,7 @@
         border-radius: 20px;
         font-size: 16px;
     }
+    
     .dashboard-location{
         font-weight: bold;
         padding: 5px 10px;
