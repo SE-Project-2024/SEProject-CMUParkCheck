@@ -42,92 +42,112 @@
     
     <button type="submit" class="submit "id="submitBtn">Publish Complaint</button>
 </form>
+<div id="success-popup" class="alternative-prompt-overlay" style="display:none;">
+    <div class="alternative-overlay-content">
+        <button class="close-button" onclick="closePopup()">&times;</button>
+        <p>Complaint submitted successfully!</p>
+        <p id="ref-number"></p>
+        <button onclick="redirectToDashboard()">OK</button>
+    </div>
+</div>
+
 
 <script>
-        let selectedFiles = [];
-
-        window.onload = function() {
-            document.querySelector("form").reset();
-            document.getElementById("previewContainer").innerHTML = "";
-        };
-
-        function previewFiles() {
-            const fileInput = document.getElementById("myFile");
-            const files = Array.from(fileInput.files);
-            const previewContainer = document.getElementById("previewContainer");
-
-            selectedFiles = [...files];
-            previewContainer.innerHTML = "";
-
-            selectedFiles.forEach((file, index) => {
-                const fileContainer = document.createElement("div");
-                fileContainer.classList.add(file.type.startsWith('image/') ? "img" : "file-container");
-
-                if (file && file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const img = document.createElement("img");
-                        img.src = e.target.result;
-                        fileContainer.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    const fileIcon = document.createElement("div");
-                    fileIcon.classList.add("file-icon");
-                    fileIcon.innerHTML = "&#128196;"; 
-
-                    const fileName = document.createElement("div");
-                    fileName.classList.add("file-name");
-                    fileName.textContent = file.name;
-
-                    fileContainer.appendChild(fileIcon);
-                    fileContainer.appendChild(fileName);
-                }
-
-                const deleteBtn = document.createElement("span");
-                deleteBtn.classList.add("delete");
-                deleteBtn.innerHTML = "&times;";
-                deleteBtn.onclick = function() {
-                    removeFile(index);
+    let selectedFiles = [];
+    
+    window.onload = function() {
+        document.querySelector("form").reset();
+        document.getElementById("previewContainer").innerHTML = "";
+    };
+    
+    function previewFiles() {
+        const fileInput = document.getElementById("myFile");
+        const files = Array.from(fileInput.files);
+        const previewContainer = document.getElementById("previewContainer");
+    
+        selectedFiles = [...files];
+        previewContainer.innerHTML = "";
+    
+        selectedFiles.forEach((file, index) => {
+            const fileContainer = document.createElement("div");
+            fileContainer.classList.add(file.type.startsWith('image/') ? "img" : "file-container");
+    
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement("img");
+                    img.src = e.target.result;
+                    fileContainer.appendChild(img);
                 };
-
-                fileContainer.appendChild(deleteBtn);
-                previewContainer.appendChild(fileContainer);
-            });
-        }
-
-        function removeFile(index) {
-            selectedFiles.splice(index, 1); 
-            const fileInput = document.getElementById("myFile");
-            const dt = new DataTransfer();
-            selectedFiles.forEach(file => dt.items.add(file)); 
-            fileInput.files = dt.files;
-            previewFiles();
-        }
-
-        document.querySelector("#complaintForm").onsubmit = function(event) {
-            event.preventDefault();
-
-            const formData = new FormData(this); // Create FormData from the form
-            selectedFiles.forEach(file => {
-                formData.append('myFile', file); // Append files to FormData
-            });
-
-            fetch('/submit-complaint', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle success or error response
-                console.log(data);
-                // Optionally reset the form or show a success message
-                this.reset();
-                document.getElementById("previewContainer").innerHTML = "";
-                selectedFiles = [];
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        };
-    </script>    
+                reader.readAsDataURL(file);
+            } else {
+                const fileIcon = document.createElement("div");
+                fileIcon.classList.add("file-icon");
+                fileIcon.innerHTML = "&#128196;"; 
+    
+                const fileName = document.createElement("div");
+                fileName.classList.add("file-name");
+                fileName.textContent = file.name;
+    
+                fileContainer.appendChild(fileIcon);
+                fileContainer.appendChild(fileName);
+            }
+    
+            const deleteBtn = document.createElement("span");
+            deleteBtn.classList.add("delete");
+            deleteBtn.innerHTML = "&times;";
+            deleteBtn.onclick = function() {
+                removeFile(index);
+            };
+    
+            fileContainer.appendChild(deleteBtn);
+            previewContainer.appendChild(fileContainer);
+        });
+    }
+    
+    function removeFile(index) {
+        selectedFiles.splice(index, 1); 
+        const fileInput = document.getElementById("myFile");
+        const dt = new DataTransfer();
+        selectedFiles.forEach(file => dt.items.add(file)); 
+        fileInput.files = dt.files;
+        previewFiles();
+    }
+    
+    document.querySelector("#upload").onsubmit = function(event) {
+        event.preventDefault();
+    
+        const formData = new FormData(this); // Create FormData from the form
+        selectedFiles.forEach(file => {
+            formData.append('filename[]', file); // Append files to FormData
+        });
+    
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.success) {
+                document.getElementById("ref-number").textContent = `Reference Number: ${data.ref_number}`;
+                document.getElementById("success-popup").style.display = "block"; // Show the popup
+            }
+            this.reset();
+            document.getElementById("previewContainer").innerHTML = "";
+            selectedFiles = [];
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    };
+    
+    function closePopup() {
+        document.getElementById("success-popup").style.display = "none";
+    }
+    
+    function redirectToDashboard() {
+        window.location.href = '/complaints-dashboard';
+    }
+    </script>
+    

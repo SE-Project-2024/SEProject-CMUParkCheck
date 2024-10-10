@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Kard_1539",
+    password: "Jireh410.",
     database: "cmu_parkcheck"
 });
 
@@ -243,8 +243,9 @@ app.post('/upload', upload.array('filename[]'), (req, res) => {
     if(!parkingArea || !issue){
         return res.status(400).send('Parking Area and issue are required.');
     }
-    const query = `INSERT INTO complaints (parking_area, issue, created_at) VALUES (?, ?, NOW())`;
-    connection.query(query, [parkingArea, issue], (err, result) => {
+    const ref_number = Math.floor(100000 + Math.random() * 900000);
+    const query = `INSERT INTO complaints (parking_area, issue, ref_number, created_at) VALUES (?, ?, ?, NOW())`;
+    connection.query(query, [parkingArea, issue, ref_number], (err, result) => {
         if (err) {
             console.error('Error inserting complaint: ', err);
             return res.status(500).send('Failed to submit complaint');
@@ -263,10 +264,10 @@ app.post('/upload', upload.array('filename[]'), (req, res) => {
                     return res.status(500).send('Failed to upload files');
                 }
 
-                res.send('Complaint submitted successfully with files');
+                return res.json({success: true, message: 'Complaint submitted successfully with files.', ref_number: ref_number});
             });
         } else {
-            res.send('Complaint submitted successfully without files');
+            return res.json({success: true, message: 'Complaint submitted successfully without files. Reference Number.', ref_number: ref_number});
         }
     });
 });
