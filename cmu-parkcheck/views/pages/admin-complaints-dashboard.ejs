@@ -54,15 +54,17 @@
     }
     .status-filter select {
         margin-left: 10px;
-        background-color: #872698;  
-        color: white;
         padding: 10px;
-        border: none;
+        background-color: white;
+        border: 1px solid #b7b1b1;
         border-radius: 5px;
         font-size: 14px;
         width: 100px;
     }
-
+    .status-selector{
+        width: 100px;
+        margin-top: 10px;
+    }
 </style>
 
 <script>
@@ -95,7 +97,7 @@
 });
 
 
-     document.getElementById('complaintsBtn').addEventListener('click', function(){
+    document.getElementById('complaintsBtn').addEventListener('click', function(){
         window.location.href ='/complaints';
     });
     document.getElementById('status-filter').addEventListener('change', function() {

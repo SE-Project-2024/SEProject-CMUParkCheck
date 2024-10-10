@@ -42,8 +42,8 @@
     
     <button type="submit" class="submit "id="submitBtn">Publish Complaint</button>
 </form>
-<div id="success-popup" class="alternative-prompt-overlay" style="display:none;">
-    <div class="alternative-overlay-content">
+<div id="success-popup-complaint" class="alternative-prompt-overlay-complaint" style="display:none;">
+    <div class="alternative-overlay-content-complaint">
         <button class="close-button" onclick="closePopup()">&times;</button>
         <p>Complaint submitted successfully!</p>
         <p id="ref-number"></p>
@@ -51,6 +51,72 @@
     </div>
 </div>
 
+<style>
+#success-popup-complaint {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden; 
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s ease-in-out;
+}
+
+#success-popup-complaint.active {
+    visibility: visible; 
+    opacity: 1;
+}
+
+.alternative-overlay-content-complaint {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: scaleUp 0.3s ease-in-out;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+}
+
+/* Close button */
+.alternative-overlay-content-complaint .close-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em; 
+    color: #888;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.alternative-overlay-content-complaint p {
+    font-size: 1em;
+    color: #333;
+    margin: 10px 0;
+}
+
+.alternative-overlay-content-complaint button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+</style>
 
 <script>
     let selectedFiles = [];
@@ -131,7 +197,7 @@
             console.log(data);
             if (data.success) {
                 document.getElementById("ref-number").innerHTML = `Reference Number: <strong>${data.ref_number}</strong>`;
-                document.getElementById("success-popup").style.display = "block"; // Show the popup
+                document.getElementById("success-popup-complaint").style.display = "block"; // Show the popup
             }
             this.reset();
             document.getElementById("previewContainer").innerHTML = "";
@@ -143,8 +209,12 @@
     };
     
     function closePopup() {
-        document.getElementById("success-popup").style.display = "none";
+        document.getElementById("success-popup-complaint").style.display = "none";
     }
+    document.getElementById("success-popup-complaint").classList.add("active");
+    function closePopup() {
+    document.getElementById("success-popup-complaint").classList.remove("active");
+}
     
     function redirectToDashboard() {
         window.location.href = '/complaints-dashboard';

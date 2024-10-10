@@ -57,7 +57,7 @@ app.post('/admin/update-status/:id', (req, res) => {
     const newStatus = req.body.status;
 
     const sql = 'UPDATE complaints SET status = ? WHERE id = ?';
-    connection.query(sql, [newStatus, complaintId], (err, result) => { // เปลี่ยน db เป็น connection
+    connection.query(sql, [newStatus, complaintId], (err, result) => { 
         if (err) {
             console.error(err);
             return res.json({ success: false, message: 'Database error' });
@@ -85,7 +85,7 @@ app.get('/admin-complaints-dashboard', function(req, res) {
             console.error('Error fetching complaints:', err);
             return res.status(500).send('Server Error');
         }
-        console.log('Complaints fetched:', results); // Add this line to inspect the data
+        console.log('Complaints fetched:', results); 
         console.log(results);
         res.render('pages/admin-complaints-dashboard', { rows: results });
     });
