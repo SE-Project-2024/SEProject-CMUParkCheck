@@ -130,7 +130,7 @@
         .then(data => {
             console.log(data);
             if (data.success) {
-                document.getElementById("ref-number").textContent = `Reference Number: ${data.ref_number}`;
+                document.getElementById("ref-number").innerHTML = `Reference Number: <strong>${data.ref_number}</strong>`;
                 document.getElementById("success-popup").style.display = "block"; // Show the popup
             }
             this.reset();
