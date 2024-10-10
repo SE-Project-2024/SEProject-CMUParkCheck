@@ -12,7 +12,9 @@
         <option value="pending">Pending</option>
     </select>
 </div>
-
+<div class="search-track">
+    <input type="text" class="track-num" placeholder="Ref Number to Track Complaint Status">
+</div>
 <div class="container">
     <% rows.forEach(function(row) { %>
         <div class="dashboard-row status-<%= row.status %>">
@@ -55,6 +57,18 @@
         border-radius: 5px;
         font-size: 14px;
         width: 100px;
+    }
+    .search-track{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .track-num{
+        width: 80%;
+        height: 30px;
+        margin-top: 20px;
+        border-radius: 4px;
+        font-size: 10px;
     }
 
 </style>

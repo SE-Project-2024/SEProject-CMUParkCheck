@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Jireh410.",
+    password: "Kard_1539",
     database: "cmu_parkcheck"
 });
 
@@ -48,10 +48,6 @@ app.get('/index', function(req, res) {
     res.render('pages/index');
 });
 
-app.get('/admin-manage-parking',function(req,res){
-    res.render('pages/admin-manage-parking')
-});
-
 app.post('/admin/update-status/:id', (req, res) => {
     const complaintId = req.params.id;
     const newStatus = req.body.status;
@@ -66,7 +62,7 @@ app.post('/admin/update-status/:id', (req, res) => {
     });
 });
 
-//1
+
 app.get('/complaints-dashboard', function(req, res) {
     const query = 'SELECT * FROM complaints'; 
     connection.query(query, (err, results) => {
@@ -91,6 +87,18 @@ app.get('/admin-complaints-dashboard', function(req, res) {
     });
 });
 
+app.get('/admin-manage-parking', function(req, res) {
+    const query = 'SELECT * FROM buildings'; 
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching complaints:', err);
+            return res.status(500).send('Server Error');
+        }
+        console.log('Buildings fetched:', results); 
+        console.log(results);
+        res.render('pages/admin-manage-parking', { rows: results });
+    });
+});
 
 app.get('/complaints-dashboard', function(req, res) {
     const query = `
@@ -108,6 +116,7 @@ app.get('/complaints-dashboard', function(req, res) {
         console.log(results)
     });
 });
+
 app.get('/admin-complaints-dashboard', function(req, res) {
     const query = `
         SELECT complaints.*, complaint_files.filename 

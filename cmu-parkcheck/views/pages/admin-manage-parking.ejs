@@ -1,1 +1,22 @@
 <%- include("../partials/admin-header") %>
+<div class="container-building">
+<% rows.forEach(function(building, index) { %>
+    <select id="building-<%= index %>" class="manage-building" name="building-<%= index %>">
+        <option value="<%= building.building_code %>" class="select-manage-building"><%= building.name %></option>
+    </select>
+    <br/>
+<% }) %>
+</div>
+<style>
+/* .container-buliding{
+
+} */
+.manage-building{
+    width: 90%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+</style>
