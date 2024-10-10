@@ -67,14 +67,14 @@
     const selectedStatus = this.value;
     const complaintRows = document.querySelectorAll('.dashboard-row');
 
-    complaintRows.forEach(rows => {
+    complaintRows.forEach(row => {
         if (selectedStatus === 'all') {
-            rows.style.display = 'block';
+            row.style.display = 'block';
         } else {
-            if (rows.classList.contains('status-' + selectedStatus)) {
-                rows.style.display = 'block';
+            if (row.classList.contains('status-' + selectedStatus)) {
+                row.style.display = 'block';
             } else {
-                rows.style.display = 'none';
+                row.style.display = 'none';
             }
         }
     });
