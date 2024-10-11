@@ -1,22 +1,161 @@
 <%- include("../partials/admin-header") %>
 <div class="container-building">
-<% rows.forEach(function(building, index) { %>
-    <select id="building-<%= index %>" class="manage-building" name="building-<%= index %>">
-        <option value="<%= building.building_code %>" class="select-manage-building"><%= building.name %></option>
+    <select id="building-select" class="manage-building" onchange="updateParkingOptions()">
+        <option value="" disabled selected>เลือกอาคาร</option>
+        <% rows.forEach(function(building, index) { %>
+            <option value="<%= index %>"><%= building.name %></option>
+        <% }) %>
     </select>
     <br/>
-<% }) %>
-</div>
-<style>
-/* .container-buliding{
 
-} */
-.manage-building{
-    width: 90%;
-    height: 40px;
+    <div id="parking-display" class="parking-display"></div> <!-- แสดงพื้นที่จอดรถที่เลือก -->
+</div>
+
+<style>
+.container-building {
+    margin-top: 20px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center; /* จัดกลางในแนวนอน */
 }
 
+.manage-building {
+    width: 60%; /* ตั้งความกว้างของ dropdown */
+    height: 40px;
+}
+
+.parking-display {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column; /* ใช้แนวตั้ง */
+    align-items: center; /* จัดกลางในแนวนอน */
+}
+
+.parking-box {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 90%; /* เพิ่มความกว้างของกล่องพื้นที่จอดรถ */
+    max-width: 600px; /* กำหนดความกว้างสูงสุดเพื่อไม่ให้กว้างเกินไป */
+}
+
+.parking-box h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    text-align: center; /* จัดข้อความให้อยู่กลาง */
+}
+
+.parking-status {
+    font-size: 14px;
+    color: gray; /* สีของสถานะ */
+}
+
+.status-radio {
+    margin-top: 10px; /* เพิ่มระยะห่างด้านบน */
+    display: flex; /* ใช้ flexbox */
+    align-items: center; /* จัดแนวกลางในแนวตั้ง */
+}
+
+.remove-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: auto; /* ให้ปุ่มอยู่ด้านขวา */
+}
 </style>
+
+<script>
+function updateParkingOptions() {
+    const buildingSelect = document.getElementById("building-select");
+    const parkingDisplay = document.getElementById("parking-display");
+    const selectedBuilding = buildingSelect.value;
+
+    // Clear previous parking display
+    parkingDisplay.innerHTML = '';
+    parkingDisplay.style.display = 'none'; // ซ่อนเมื่อไม่มีการเลือก
+
+    // Define parking options for each building
+    const parkingOptions = [
+        ["CAMT Parking 1", "CAMT Parking 2", "CAMT Parking 3", "CAMT Parking 4", "CAMT Parking 5"], // อาคาร 1
+        ["Female Dormitory 3 Parking 1", "Central Station Parking 1", "Central Station Parking 2"], // อาคาร 2
+        ["CMU Library Parking 1", "CMU Cooperative Store Parking 1", "CMU Cooperative Store Parking 2"], // อาคาร 3
+        ["TLIC Parking"], // อาคาร 4
+        ["RB5 Parking 1", "RB5 Parking 2"], // อาคาร 5
+        ["Human Parking 1"], // อาคาร 6
+        ["Social Parking 1"], // อาคาร 7
+        ["Angkaew Parking 1", "Angkaew Parking 2", "Angkaew Parking 3"], // อาคาร 8
+        ["ITSC Parking 2"], // อาคาร 9
+        ["Computer Science Parking 1"], // อาคาร 10
+        ["Ang Tat Chomphu Parking 1", "Ang Tat Chomphu Parking 2"], // อาคาร 11
+        ["MassComm Parking 1", "MassComm Parking 2", "MassComm Parking 3", "MassComm Parking 4"], // อาคาร 12
+        ["Male Dormitory 5 Parking 1", "Male Dormitory 4 Parking 1", "Male Dormitory 6 Parking 1", "Male Dormitory 6 Parking 2", "Male Dormitory 4 Parking 2", "Male Dormitory 7 Parking 1"], // อาคาร 13
+    ];
+
+    // Get the parking options based on selected building
+    if (selectedBuilding) {
+        const options = parkingOptions[selectedBuilding];
+        if (options) {
+            options.forEach(function(option) {
+                // สร้างกล่องสำหรับแต่ละพื้นที่จอดรถ
+                const parkingBox = document.createElement("div");
+                parkingBox.className = "parking-box";
+
+                const heading = document.createElement("h3");
+                heading.textContent = option; // ใช้ชื่อของพื้นที่จอดรถ
+                parkingBox.appendChild(heading);
+
+                // สร้างฟอร์มสำหรับสถานะ
+                const statusForm = document.createElement("div");
+                statusForm.className = "status-radio";
+
+                const activeRadio = document.createElement("input");
+                activeRadio.type = "radio";
+                activeRadio.id = option + "-active";
+                activeRadio.name = option; // ตั้งชื่อกลุ่มให้ตรงกับชื่อพื้นที่
+                activeRadio.value = "active";
+
+                const activeLabel = document.createElement("label");
+                activeLabel.htmlFor = activeRadio.id;
+                activeLabel.textContent = "Active";
+
+                const underConstructionRadio = document.createElement("input");
+                underConstructionRadio.type = "radio";
+                underConstructionRadio.id = option + "-under-construction";
+                underConstructionRadio.name = option; // ตั้งชื่อกลุ่มให้ตรงกับชื่อพื้นที่
+                underConstructionRadio.value = "under_construction";
+
+                const underConstructionLabel = document.createElement("label");
+                underConstructionLabel.htmlFor = underConstructionRadio.id;
+                underConstructionLabel.textContent = "Under Construction";
+
+                // เพิ่มปุ่มเลือกและ label ลงในฟอร์ม
+                statusForm.appendChild(activeRadio);
+                statusForm.appendChild(activeLabel);
+                statusForm.appendChild(document.createElement("br")); // แทรกบรรทัดใหม่
+                statusForm.appendChild(underConstructionRadio);
+                statusForm.appendChild(underConstructionLabel);
+
+                parkingBox.appendChild(statusForm); // เพิ่มฟอร์มลงในกล่องพื้นที่จอดรถ
+
+                // สร้างปุ่ม Remove
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "Remove";
+                removeButton.className = "remove-button";
+                removeButton.onclick = function() {
+                    parkingDisplay.removeChild(parkingBox); // ลบกล่องพื้นที่จอดรถ
+                };
+
+                statusForm.appendChild(removeButton); // เพิ่มปุ่ม Remove ลงในฟอร์ม
+                parkingDisplay.appendChild(parkingBox); // เพิ่มกล่องพื้นที่จอดรถลงในการแสดงผล
+            });
+            parkingDisplay.style.display = 'block'; // แสดงพื้นที่จอดรถ
+        }
+    }
+}
+</script>

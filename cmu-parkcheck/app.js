@@ -62,6 +62,20 @@ app.post('/admin/update-status/:id', (req, res) => {
     });
 });
 
+app.get('/parking-areas/:buildingId', (req, res) => {
+    const buildingId = req.params.buildingId;
+
+    const query = 'SELECT * FROM parking_areas WHERE building_id = ?';
+
+    connection.query(query, [buildingId], (error, results) => {
+        if (error) {
+            console.error('Error fetching parking areas:', error);
+            return res.status(500).send('Error fetching parking areas');
+        }
+        
+        res.json(results);
+    });
+});
 
 app.get('/complaints-dashboard', function(req, res) {
     const query = 'SELECT * FROM complaints'; 
