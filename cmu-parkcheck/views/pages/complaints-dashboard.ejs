@@ -16,8 +16,12 @@
     <input type="text" class="track-num" placeholder="Ref Number to Track Complaint Status">
 </div>
 <div class="container">
-    <% rows.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); %>
-    <% rows.forEach(function(row) { %>
+    <% const uniqueRows = Array.from(new Set(rows.map(a => a.ref_number)))
+    .map(ref_number => {
+        return rows.find(a => a.ref_number === ref_number);
+    });
+    uniqueRows.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));%>
+    <% uniqueRows.forEach(function(row) { %>
         <div class="dashboard-row status-<%= row.status %>" data-ref-number="<%= row.ref_number %>">
             <div class="dashboard-date"><%= new Date(row.created_at).toLocaleString() %></div>
             <div class="dashboard-location"><strong>Parking Location: <%= row.parking_area %></strong></div>
