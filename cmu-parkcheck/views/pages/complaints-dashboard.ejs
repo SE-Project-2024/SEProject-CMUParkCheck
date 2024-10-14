@@ -20,16 +20,19 @@
     .map(ref_number => {
         return rows.find(a => a.ref_number === ref_number);
     });
-    uniqueRows.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));%>
+    uniqueRows.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); %>
     <% uniqueRows.forEach(function(row) { %>
         <div class="dashboard-row status-<%= row.status %>" data-ref-number="<%= row.ref_number %>">
             <div class="dashboard-date"><%= new Date(row.created_at).toLocaleString() %></div>
             <div class="dashboard-location"><strong>Parking Location: <%= row.parking_area %></strong></div>
             <div class="dashboard-issue"><%= row.issue %></div>
 
-            <% if (row.filename) { %>
-                <div class="dashboard-image">
-                    <img src="/uploads/<%= row.filename %>" alt="Complaint Image" width="200">
+            <% if (row.filenames) { 
+                const filenamesArray = row.filenames.split(','); %>
+                <div class="dashboard-images">
+                    <% filenamesArray.forEach(function(filename) { %>
+                        <img src="/uploads/<%= filename.trim() %>" alt="Complaint Image" width="200">
+                    <% }); %>
                 </div>
             <% } %> 
             <div class="dashboard-status">Status: <%= row.status %></div>

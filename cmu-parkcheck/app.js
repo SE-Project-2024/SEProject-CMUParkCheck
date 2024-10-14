@@ -99,11 +99,11 @@ app.get('/admin-manage-parking', function(req, res) {
 
 app.get('/complaints-dashboard', function(req, res) {
     const query = `
-        SELECT complaints.*, complaint_files.filename 
+        SELECT complaints.*, GROUP_CONCAT(complaint_files.filename ) AS filenames
         FROM complaints 
-        LEFT JOIN complaint_files 
-        ON complaints.id = complaint_files.complaint_id
-    `;
+        LEFT JOIN complaint_files ON complaints.id = complaint_files.complaint_id
+        GROUP BY complaints.id
+        `;
     connection.query(query, (err, results) => {
         if (err) {
             console.error('Error fetching complaints and files:', err);
