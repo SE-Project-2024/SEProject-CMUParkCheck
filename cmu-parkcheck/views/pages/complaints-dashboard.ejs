@@ -22,7 +22,7 @@
             <div class="dashboard-date"><%= new Date(row.created_at).toLocaleString() %></div>
             <div class="dashboard-location"><strong>Parking Location: <%= row.parking_area %></strong></div>
             <div class="dashboard-issue"><%= row.issue %></div>
-            <!-- hi i'm file -->
+
             <% if (row.filename) { %>
                 <div class="dashboard-image">
                     <img src="/uploads/<%= row.filename %>" alt="Complaint Image" width="200">

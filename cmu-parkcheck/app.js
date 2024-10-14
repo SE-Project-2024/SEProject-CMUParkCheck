@@ -4,12 +4,13 @@ const ejs = require("ejs");
 const path = require("path");
 const mysql = require("mysql2");
 const multer = require ("multer");
+const mime = require('mime-types');
 
 const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Kard_1539",
+    password: "Jireh410.",
     database: "cmu_parkcheck"
 });
 
@@ -26,10 +27,15 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now()+'-' + file.originalname);
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const extension = mime.extension(file.mimetype);
+        cb(null, uniqueSuffix + extension);
     }
 });
-const upload = multer({ dest: 'uploads/'});
+const upload = multer({ 
+    storage: storage
+});
+
 
 app.set('view engine', 'ejs');
 
@@ -39,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/img', express.static(path.join(__dirname, 'img')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static('uploads'));
 
 app.get('/', (req, res) => {
     res.render('pages/landing');
@@ -74,30 +81,6 @@ app.get('/parking-areas/:buildingId', (req, res) => {
         }
         
         res.json(results);
-    });
-});
-
-app.get('/complaints-dashboard', function(req, res) {
-    const query = 'SELECT * FROM complaints'; 
-    connection.query(query, (err, results) => {
-        if (err) {
-            console.error('Error fetching complaints:', err);
-            return res.status(500).send('Server Error');
-        }
-        res.render('pages/complaints-dashboard', { rows: results });
-    });
-});
-//1
-app.get('/admin-complaints-dashboard', function(req, res) {
-    const query = 'SELECT * FROM complaints'; 
-    connection.query(query, (err, results) => {
-        if (err) {
-            console.error('Error fetching complaints:', err);
-            return res.status(500).send('Server Error');
-        }
-        console.log('Complaints fetched:', results); 
-        console.log(results);
-        res.render('pages/admin-complaints-dashboard', { rows: results });
     });
 });
 
@@ -162,9 +145,6 @@ app.get('/complaints', (req, res) => {
       res.render('pages/complaints', { parkingAreas: results });
     });
   });
-  app.get('/complaints-dashboard', function(req, res) {
-    res.render('pages/complaints-dashboard');
-});
 
 app.get('/api/feedback/:parkingAreaId', (req, res) => {
     const parkingAreaId = req.params.parkingAreaId;
