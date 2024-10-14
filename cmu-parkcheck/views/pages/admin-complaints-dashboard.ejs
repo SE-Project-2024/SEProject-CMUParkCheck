@@ -14,12 +14,16 @@
 </div>
 
 <div class="container">
-    <% rows.forEach(function(row) { %>
+    <% const uniqueRows = Array.from(new Set(rows.map(a => a.ref_number)))
+    .map(ref_number => {
+        return rows.find(a => a.ref_number === ref_number);
+    });
+    uniqueRows.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));%>
+    <% uniqueRows.forEach(function(row) { %>
         <div class="dashboard-row status-<%= row.status %>">
             <div class="dashboard-date"><%= new Date(row.created_at).toLocaleString() %></div>
             <div class="dashboard-location">Parking Location: <%= row.parking_area %></div>
             <div class="dashboard-issue">Issue: <%= row.issue %></div>
-            <!-- hi i'm file -->
             <% if (row.filename) { %>
                 <div class="dashboard-image">
                     <img src="/uploads/<%= row.filename %>" alt="Complaint Image" width="200">
