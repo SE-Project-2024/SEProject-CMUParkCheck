@@ -1,7 +1,7 @@
 <%- include("../partials/admin-header") %>
 <div class="container-building">
     <select id="building-select" class="manage-building" onchange="updateParkingOptions()">
-        <option value="" disabled selected>เลือกอาคาร</option>
+        <option value="" disabled selected>Select Building</option>
         <% rows.forEach(function(building, index) { %>
             <option value="<%= index %>"><%= building.name %></option>
         <% }) %>

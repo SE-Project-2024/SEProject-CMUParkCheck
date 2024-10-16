@@ -48,7 +48,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
 
 app.get('/', (req, res) => {
-    res.render('pages/landing');
+    res.render('pages/index');
+});
+app.get('/admin-landing', (req, res) =>{
+    res.render('pages/admin-landing');
 });
 
 app.get('/index', function(req, res) {
@@ -323,4 +326,6 @@ const PORT = 3000;
 app.listen(PORT, function () {
     console.log(`Server started on port ${PORT}`);
     console.log("http://localhost:3000/");
+    console.log("http://localhost:3000/admin-landing");
+
 });
