@@ -117,47 +117,56 @@
         }
     
         fetch(`http://localhost:3000/api/parking_areas`)
-        .then(response => response.json())
-        .then(data => {
-            console.log('Fetched data: ', data);
-            data.forEach(parking_area => {
-                const iconURL = vehicleTypeMarkers[parking_area.vehicle_type];
-                const marker = new google.maps.Marker({
-                    position: { lat: parseFloat(parking_area.latitude), lng: parseFloat(parking_area.longitude) },
-                    map: map,
-                    title: parking_area.name,
-                    icon: {
-                        url: iconURL,
-                        scaledSize: new google.maps.Size(60 , 60)
-                    },
-                    vehicleType: parking_area.vehicle_type              
-                });
-                const infoWindowContent = `
-                <div class="info-window">
-                    <div class="parking-situation-meter">
-                        <div class="positive-feedback" id="green-${parking_area.id}"></div>
-                        <div class="negative-feedback" id="red-${parking_area.id}"></div>
-                    </div>
-                    <h3>${parking_area.name}</h3>
-                    <p>${parking_area.latitude} , ${parking_area.longitude}</p>
-                    <div class="info-window-link" onclick="openParkingDetails(${parking_area.id})">See more</div>
-                    </div>
-                `;
-    
-                const infoWindow = new google.maps.InfoWindow({
-                    content: infoWindowContent
-                });
-                marker.addListener('click', () => {
-                    console.log(`Clicked on marker: ${parking_area.name}`);
-                    infoWindow.setContent(infoWindowContent);
-                    infoWindow.open(map, marker);
-                    updateMeter(parking_area.id);
-                });
-                parkingMarkers.push(marker);
+    .then(response => response.json())
+    .then(data => {
+        console.log('Fetched data: ', data);
+        data.forEach(parking_area => {
+            const iconURL = vehicleTypeMarkers[parking_area.vehicle_type];
+            const marker = new google.maps.Marker({
+                position: { lat: parseFloat(parking_area.latitude), lng: parseFloat(parking_area.longitude) },
+                map: map,
+                title: parking_area.name,
+                icon: {
+                    url: iconURL,
+                    scaledSize: new google.maps.Size(60 , 60)
+                },
+                vehicleType: parking_area.vehicle_type              
             });
-        })
-        .catch(error => console.error('Error fetching parking areas: ', error));
-    }
+            
+            // Retrieve the status from localStorage or the server (in this case, from localStorage)
+            const parkingStatuses = JSON.parse(localStorage.getItem('parkingStatuses')) || {};
+            const currentStatus = parkingStatuses[parking_area.name] || 'Unknown'; // Default to 'Unknown' if no status found
+
+            // Add status to the infoWindowContent
+            const infoWindowContent = `
+            <div class="info-window">
+                <div class="parking-situation-meter">
+                    <div class="positive-feedback" id="green-${parking_area.id}"></div>
+                    <div class="negative-feedback" id="red-${parking_area.id}"></div>
+                </div>
+                <h3>${parking_area.name}</h3>
+                <p>Latitude: ${parking_area.latitude}, Longitude: ${parking_area.longitude}</p>
+                <p>Status: <strong>${currentStatus}</strong></p> <!-- Display the parking area status -->
+                <div class="info-window-link" onclick="openParkingDetails(${parking_area.id})">See more</div>
+            </div>
+            `;
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: infoWindowContent
+            });
+
+            marker.addListener('click', () => {
+                console.log(`Clicked on marker: ${parking_area.name}`);
+                infoWindow.setContent(infoWindowContent);
+                infoWindow.open(map, marker);
+                updateMeter(parking_area.id);
+            });
+
+            parkingMarkers.push(marker);
+        });
+    })
+    .catch(error => console.error('Error fetching parking areas: ', error));
+}
     function updateMeter(parkingAreaId) {
         fetch(`http://localhost:3000/api/feedback/${parkingAreaId}`)
         .then(response => response.json())
