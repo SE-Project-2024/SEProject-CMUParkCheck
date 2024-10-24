@@ -203,12 +203,59 @@ function createParkingBox(option, parkingDisplay) {
         const removedParking = JSON.parse(localStorage.getItem('removedParking')) || [];
         removedParking.forEach(option => {
             const parkingDisplay = document.getElementById("parking-display");
-            
-            // ถ้าพื้นที่จอดรถได้รับการกู้คืนแล้วให้ข้ามไป
-            if (document.getElementById(option)) return;
-            
-            createParkingBox(option, parkingDisplay); // กู้คืนพื้นที่จอดรถที่ถูกลบ
+            const parkingBox = document.createElement("div");
+            parkingBox.className = "parking-box";
+    
+            const heading = document.createElement("h3");
+            heading.textContent = option; // ใช้ชื่อของพื้นที่จอดรถ
+            parkingBox.appendChild(heading);
+    
+            // Create status form
+            const statusForm = document.createElement("div");
+            statusForm.className = "status-radio";
+    
+            const activeRadio = document.createElement("input");
+            activeRadio.type = "radio";
+            activeRadio.id = option + "-active";
+            activeRadio.name = option; // ตั้งชื่อกลุ่มให้ตรงกับชื่อพื้นที่
+            activeRadio.value = "active";
+    
+            const activeLabel = document.createElement("label");
+            activeLabel.htmlFor = activeRadio.id;
+            activeLabel.textContent = "Active";
+    
+            const underConstructionRadio = document.createElement("input");
+            underConstructionRadio.type = "radio";
+            underConstructionRadio.id = option + "-under-construction";
+            underConstructionRadio.name = option; // ตั้งชื่อกลุ่มให้ตรงกับชื่อพื้นที่
+            underConstructionRadio.value = "under_construction";
+    
+            const underConstructionLabel = document.createElement("label");
+            underConstructionLabel.htmlFor = underConstructionRadio.id;
+            underConstructionLabel.textContent = "Under Construction";
+    
+            // เพิ่มปุ่มเลือกและ label ลงในฟอร์ม
+            statusForm.appendChild(activeRadio);
+            statusForm.appendChild(activeLabel);
+            statusForm.appendChild(document.createElement("br")); // แทรกบรรทัดใหม่
+            statusForm.appendChild(underConstructionRadio);
+            statusForm.appendChild(underConstructionLabel);
+    
+            parkingBox.appendChild(statusForm); // เพิ่มฟอร์มลงในกล่องพื้นที่จอดรถ
+    
+            // Create Restore button
+            const restoreButton = document.createElement("button");
+            restoreButton.textContent = "Restore";
+            restoreButton.className = "remove-button";
+            restoreButton.onclick = function() {
+                parkingDisplay.appendChild(parkingBox); // แสดงกล่องพื้นที่จอดรถ
+                removedParking.splice(removedParking.indexOf(option), 1); // ลบจาก array ที่ถูกลบ
+                localStorage.setItem('removedParking', JSON.stringify(removedParking)); // อัปเดตใน localStorage
+                restoreButton.remove(); // ลบปุ่ม Restore
+            };
+    
+            statusForm.appendChild(restoreButton); // เพิ่มปุ่ม Restore ลงในฟอร์ม
+            parkingDisplay.appendChild(parkingBox); // เพิ่มกล่องพื้นที่จอดรถลงในการแสดงผล
         });
-        localStorage.setItem('removedParking', JSON.stringify([])); // ล้างข้อมูลพื้นที่จอดรถที่ถูกลบ
     }
 </script>
